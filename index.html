@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曹雨柔 · AI产品经理作品集</title>
+    <style>
+        :root {
+            --bg: #fef9ed;
+            --card: #fffef7;
+            --text: #4a3b2f;
+            --text-secondary: #6b5e4f;
+            --accent: #8b6f4e;
+            --accent-light: #f5efe0;
+            --border: #d4c9b5;
+            --tag-bg: #f2e8d5;
+            --shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png'), linear-gradient(180deg, #fef9ed 0%, #fdf3dc 100%);
+            background-attachment: fixed;
+            font-family: 'Georgia', 'Times New Roman', 'STSong', 'Songti SC', 'Noto Serif SC', 'PingFang SC', 'Microsoft YaHei', serif;
+            color: var(--text);
+            line-height: 1.7;
+            /* 移除 flex，因为侧边栏用了 fixed */
+        }
+
+        /* ========== 左侧固定个人信息 ========== */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 360px;
+            height: 100vh;
+            overflow-y: auto;
+            background: var(--card);
+            border-right: 6px double var(--accent);
+            padding: 50px 32px 40px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.04);
+            z-index: 100;
+        }
+        .sidebar .avatar {
+            width: 100px; height: 100px; border-radius: 50%;
+            background: var(--accent-light);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 48px; flex-shrink: 0;
+            border: 4px solid var(--accent);
+            margin-bottom: 20px;
+        }
+        .sidebar h1 {
+            font-size: 32px; font-weight: 700; color: var(--accent);
+            letter-spacing: 2px; margin-bottom: 4px;
+        }
+        .sidebar .role {
+            font-size: 18px; color: #b48c5c; font-weight: 600;
+            margin-bottom: 28px; font-style: italic;
+            border-bottom: 2px solid var(--border); padding-bottom: 16px;
+        }
+        .sidebar .info-item {
+            font-size: 14px; color: var(--text-secondary);
+            margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+        }
+        .sidebar .info-item .icon { font-size: 18px; width: 24px; text-align: center; }
+
+        .sidebar .floral-divider {
+            text-align: center; font-size: 28px; margin: 24px 0;
+            color: var(--accent); opacity: 0.4; letter-spacing: 6px;
+        }
+        .sidebar .stats-row { display: flex; gap: 24px; margin: 20px 0; }
+        .sidebar .stat-item { text-align: center; }
+        .sidebar .stat-item .num {
+            font-size: 34px; font-weight: 700; color: var(--accent); line-height: 1;
+        }
+        .sidebar .stat-item .label { font-size: 13px; color: var(--text-secondary); }
+        .sidebar .quote {
+            font-size: 13px; color: #b7a48b; font-style: italic;
+            margin-top: auto; padding-top: 24px;
+            border-top: 2px dashed var(--border);
+            text-align: center;
+        }
+
+        /* ========== 右侧主内容 ========== */
+        .main {
+            margin-left: 360px;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 40px 48px 80px;
+            max-width: none;
+        }
+        .section-title {
+            font-size: 26px; font-weight: 700; color: var(--accent);
+            margin-bottom: 32px; letter-spacing: 2px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section-title::before { content: '🌿'; font-size: 28px; }
+
+        /* 项目卡片 */
+        .project {
+            background: var(--card);
+            border: 5px double var(--accent);
+            border-radius: 28px;
+            padding: 36px 40px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.25s, transform 0.25s;
+            position: relative;
+        }
+        .project:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-2px); }
+        .project::after {
+            content: '🍂'; position: absolute; top: 16px; right: 20px;
+            font-size: 28px; opacity: 0.35;
+        }
+        .project-header {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 12px; margin-bottom: 14px;
+        }
+        .project h2 {
+            font-size: 22px; font-weight: 700; color: var(--accent);
+            letter-spacing: 1px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .project h2 .dot {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: #c4a35a; display: inline-block;
+        }
+        .project .meta-time {
+            font-size: 12px; color: var(--text-secondary);
+            background: var(--tag-bg); padding: 4px 14px; border-radius: 20px;
+            white-space: nowrap; font-weight: 500;
+        }
+        .project .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+        .tag {
+            background: var(--accent-light); color: var(--accent);
+            padding: 4px 12px; border-radius: 16px;
+            font-size: 12px; font-weight: 600;
+            border: 1px solid var(--accent);
+        }
+        .project .desc {
+            font-size: 15px; color: var(--text-secondary);
+            margin-bottom: 22px; line-height: 1.75;
+        }
+
+        /* 媒体卡片 */
+        .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0 24px; }
+        .media-card {
+            background: #faf5e8; border-radius: 18px;
+            display: flex; flex-direction: column;
+            text-decoration: none; color: var(--accent);
+            border: 3px dashed var(--accent);
+        }
+        .media-card:hover { border-style: solid; background: #f0e6d2; }
+        .media-card .media-preview {
+            width: 100%; flex: 1; min-height: 200px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; border-radius: 15px 15px 0 0;
+            background: #fdfbf3;
+        }
+        .media-card .media-preview img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .media-card .media-preview video {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .media-card .media-preview .placeholder-icon { font-size: 40px; }
+        .media-card .label {
+            padding: 12px 16px; font-size: 13px; font-weight: 500;
+            text-align: center; color: var(--text-secondary);
+            background: rgba(255,255,255,0.5);
+            border-top: 1px dashed var(--border);
+        }
+        .media-full { grid-column: 1 / -1; }
+        .media-full .media-preview { min-height: 300px; }
+        /* 三列网格 */
+        .media-grid.media-3 { grid-template-columns: repeat(3, 1fr); }
+        .media-card.media-3-item .media-preview { min-height: 160px; }
+        /* 核心工作列表 */
+        .project h3 {
+            font-size: 18px; font-weight: 600; margin: 20px 0 10px;
+            color: #5a4a3a; display: flex; align-items: center; gap: 8px;
+        }
+        .project h3::before { content: '🌱'; font-size: 16px; }
+        .project ul {
+            padding-left: 0; font-size: 15px; color: #5a4a3a;
+            display: grid; gap: 6px; list-style: none;
+        }
+        .project ul li {
+            padding: 6px 0 6px 28px; position: relative;
+        }
+        .project ul li::before {
+            content: '✦'; position: absolute; left: 4px; color: var(--accent);
+            font-size: 12px;
+        }
+        .project ul li strong { color: var(--text); }
+
+        /* 下载按钮 */
+        .download-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--accent); color: #fff; text-decoration: none;
+            padding: 10px 24px; border-radius: 20px; font-size: 14px; font-weight: 600;
+            transition: all 0.2s; margin-top: 8px;
+            border: 2px solid #6b4e2b;
+        }
+        .download-btn:hover { background: #6b4e2b; transform: translateY(-1px); }
+
+        /* 模态弹窗 */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 999;
+            align-items: center; justify-content: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            max-width: 92vw; max-height: 88vh;
+            border-radius: 20px; overflow: hidden;
+            background: #fff; position: relative;
+            border: 5px solid var(--accent);
+        }
+        .modal-content img, .modal-content video {
+            max-width: 90vw; max-height: 85vh; display: block;
+        }
+        .modal-close {
+            position: absolute; top: 12px; right: 16px;
+            background: rgba(0,0,0,0.5); color: #fff;
+            border: none; width: 36px; height: 36px; border-radius: 50%;
+            font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .modal-close:hover { background: rgba(0,0,0,0.7); }
+
+        /* 响应式 */
+        @media (max-width: 900px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                overflow-y: visible;
+                border-right: none;
+                border-bottom: 6px double var(--accent);
+            }
+            .main {
+                margin-left: 0;
+                height: auto;
+                overflow-y: visible;
+                padding: 24px 16px 60px;
+            }
+            .project { padding: 24px 20px; }
+            .media-grid { grid-template-columns: 1fr; }
+            .media-grid.media-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 左侧固定个人信息 -->
+<aside class="sidebar">
+    <div class="avatar">🌻</div>
+    <h1>曹雨柔</h1>
+    <div class="role">AI产品经理</div>
+
+    <div class="info-item"><span class="icon">📞</span> 13399227386</div>
+    <div class="info-item"><span class="icon">✉️</span> 2085131930@qq.com</div>
+    <div class="info-item"><span class="icon">🔗</span> github.com/yourname</div>
+
+    <div class="floral-divider">🌸 ✦ 🌸</div>
+
+    <div class="quote">🌾 自然生长，踏实创造</div>
+</aside>
+
+<!-- 右侧滚动内容 -->
+<main class="main">
+    <div class="section-title">📂 作品展示</div>
+
+    <!-- 项目1：剪藏助手 -->
+    <div class="project">
+        <div class="project-header">
+            <h2><span class="dot"></span>剪藏助手</h2>
+            <span class="meta-time">2025.12 - 2026.02</span>
+        </div>
+        <div class="tags">
+            <span class="tag">Edge扩展</span><span class="tag">LLM</span><span class="tag">Prompt工程</span>
+            <span class="tag">RAG</span><span class="tag">API调用</span><span class="tag">JSONBin</span>
+        </div>
+        <p class="desc">针对跨网页收集信息效率低的痛点，开发浏览器插件，选中文字右击即可调用DeepSeek提取摘要与标签，分类存入云端支持随时查看，支持关键词、日期、分类筛选检索，支持对粘贴内容自主分类及删除，支持对分类标签自主增删改，存入内容时同步存入网页地址，通过点击其URL即可回到存入该内容的页面，已累计收集80+条内容，报错率0%。该项目极大的方便了网页信息工作者，抛弃了传统网页信息收集时不同网页来回搜索跳转等繁琐的流程，一站式整理所需所有资料，点击URL直达所需信息。
+        </p>
+        <div class="media-grid">
+            <div class="media-card" data-src="demo1.mp4" data-type="video">
+                <span class="label">演示视频</span>
+            </div>
+            <div class="media-card" data-src="screenshot1.jpg" data-type="image">
+                <span class="label">表格视图 · 点击放大</span>
+            </div>
+        </div>
+        <h3>核心工作</h3>
+        <ul>
+            <li><strong>插件开发</strong>：Manifest V3搭建右键菜单与后台调度，Chrome通知API实现操作反馈</li>
+            <li><strong>Prompt设计</strong>：三层结构化Prompt约束DeepSeek输出JSON Schema，正则剥离Markdown包裹</li>
+            <li><strong>上下文增强</strong>：抓取页面标题与选中正文嵌入Prompt，自动生成标签与重点摘要，贴合原文语义</li>
+            <li><strong>API链路</strong>：调通DeepSeek与JSONBin.io，配置token缓存确保可靠写入</li>
+            <li><strong>产品迭代</strong>：自测后增加标签搜索、日期筛选、分页、自主增删改和详情弹窗，确保其功能性</li>
+        </ul>
+    </div>
+
+    <!-- 项目2：客户反馈Agent -->
+    <div class="project">
+        <div class="project-header">
+            <h2><span class="dot"></span>客户反馈智能处理Agent</h2>
+            <span class="meta-time">2026.03 - 2026.04</span>
+        </div>
+        <div class="tags">
+            <span class="tag">Agent</span><span class="tag">Coze工作流</span><span class="tag">Prompt工程</span>
+            <span class="tag">API调用</span><span class="tag">飞书多维表格</span>
+        </div>
+        <p class="desc">搭建智能反馈处理Agent，针对客服团队人工处理用户反馈“分类耗时长、信息散落、响应不及时”的痛点，设计了该项目：通过对客户反馈进行意图、情感分析，自动区分好评、建议与Bug；其中Bug按紧急度划分为紧急Bug和普通Bug。将Bug与建议自动写入飞书多维表格，并对反馈客户做出相应回应。从而完整实现从反馈输入、自动分类、智能分流、多维度分析，到飞书多维表格自动写入的闭环流程。该项目不仅可以作为智能反馈客服，还可以节省人工收集处理建议的时间，大大提高了工作效率。</p>
+        <div class="media-grid">
+            <div class="media-card" data-src="demo2.mp4" data-type="video">
+                <span class="label">对话演示</span>
+            </div>
+            <div class="media-card" data-src="screenshot2.png" data-type="image">
+                <span class="label">工作流画布 · 点击放大</span>
+            </div>
+        </div>
+        <h3>核心工作</h3>
+        <ul>
+            <li><strong>架构设计</strong>：四步工作流+三层IF选择器，Bug、建议、好评三种类型及Bug紧急度双重路线</li>
+            <li><strong>Prompt工程</strong>：七个节点结构化Prompt，约束输出格式保障节点间数据传递可靠</li>
+            <li><strong>飞书API集成</strong>：紧急Bug与普通Bug分别写入不同表格，建议存入评估知识库</li>
+            <li><strong>情感自适应回复</strong>：定制差异化回复路径，负面融入安抚，好评生成个性化感谢</li>
+        </ul>
+    </div>
+
+    <!-- 项目3：智析文档对比系统 -->
+    <div class="project">
+        <div class="project-header">
+            <h2><span class="dot"></span>智析文档对比系统</h2>
+            <span class="meta-time">2026.04 - 2026.05</span>
+        </div>
+        <div class="tags">
+            <span class="tag">Dify工作流</span><span class="tag">DeepSeek API</span><span class="tag">Prompt工程</span>
+            <span class="tag">文档提取</span><span class="tag">Markdown输出</span>
+        </div>
+        <p class="desc">针对产品经理在多版本文档（PRD、合同、技术方案）对比中人工逐行比对效率低、易遗漏的痛点，基于 Dify 搭建智能对比工作流。支持上传两份 PDF/Word/txt/jpg等类型文档，自动提取文本并调用 DeepSeek 模型分析功能、技术约束、发布计划等维度的差异，输出结构化 Markdown 表格。创新性加入定向问答能力：用户上传文档时可附带具体问题（如“技术约束有哪些变化”），模型仅返回相关差异，避免信息过载。全流程模块化编排，典型对比任务响应时间 <10 秒，输出可用率从 70% 提升至 95% 以上。</p>
+        <div class="media-grid media-3">
+            <div class="media-card media-3-item" data-src="doc-compare-1.png" data-type="image">
+                <span class="label">工作流画布 · 点击放大</span>
+            </div>
+            <div class="media-card media-3-item" data-src="doc-compare-2.png" data-type="image">
+                <span class="label">对比结果表格 · 点击放大</span>
+            </div>
+            <div class="media-card media-3-item" data-src="doc-compare-3.png" data-type="image">
+                <span class="label">定向问答示例 · 点击放大</span>
+            </div>
+        </div>
+        <h3>核心工作</h3>
+        <ul>
+            <li><strong>工作流编排</strong>：基于 Dify 设计开始节点 → 双文档提取器 → 条件分支 → LLM → 结束节点的完整 Pipeline，支持完整对比与定向问答两种模式自动分流</li>
+            <li><strong>Prompt 工程</strong>：系统提示词预设产品经理角色，约束输出为 Markdown 表格（项目/内容/变化类型），变化类型按“新增/差异”规则分类；通过 Jinja 模板将用户问题与文档内容拼接，实现单轮针对性回答</li>
+            <li><strong>文档处理</strong>：利用 Dify 内置文档提取器解析 doc/docx/pdf/txt，自动清洗换行与空白字符，避免无关字符干扰 LLM 输出</li>
+            <li><strong>产品化设计</strong>：支持用户上传文档同时输入问题（如“新增了哪些功能”），系统自动判断并只输出相关差异，降低认知负担；输出包含总结行，方便快速浏览</li>
+        </ul>
+    </div>
+
+    <!-- 项目4：KANO调研（含Word下载） -->
+    <div class="project">
+        <div class="project-header">
+            <h2><span class="dot"></span>网易狼人杀 · 用户需求调研</h2>
+            <span class="meta-time">2025.09 - 2025.11</span>
+        </div>
+        <div class="tags">
+            <span class="tag">KANO模型</span><span class="tag">SPSS</span><span class="tag">用户分析</span>
+            <span class="tag">需求优先级</span><span class="tag">探索性因子分析</span>
+        </div>
+        <p class="desc">针对狼人杀玩家匹配、发言辅助、身份推理等痛点，用KANO模型完成需求分层，回收200+有效样本，通过SPSS信效度检验与Better-Worse系数分析，输出15个功能的需求属性与优先级排序。</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px;">
+            <a class="download-btn" href="狼人杀用户需求调研.pdf" target="_blank">
+                📄 在线查看PDF
+            </a>
+        </div>
+        <h3>核心工作</h3>
+        <ul>
+            <li><strong>用户洞察</strong>：问卷回收200+样本，结合深度访谈识别新手与女性玩家对“辅助推理”的高需求</li>
+            <li><strong>数据分析</strong>：SPSS信效度检验与探索性因子分析，区分必备/期望/魅力/无差异四类属性</li>
+            <li><strong>方案输出</strong>：设计AI发言润色与赛后复盘功能，输出优先级矩阵与MVP迭代路径</li>
+        </ul>
+    </div>
+
+    <!-- 项目5：美购汇 · 社交电商平台 -->
+    <div class="project">
+        <div class="project-header">
+            <h2><span class="dot"></span>美购汇 · 社交电商平台</h2>
+            <span class="meta-time">2025.11 - 2026.03</span>
+        </div>
+        <div class="tags">
+            <span class="tag">Axure RP 9</span><span class="tag">交互设计</span><span class="tag">原型设计</span>
+            <span class="tag">电商设计</span><span class="tag">信息架构</span>
+        </div>
+        <p class="desc">课程小组项目，设计一个带话题社区的电商App。我在团队中负责高保真原型制作、页面交互逻辑实现。团队前期已完成竞品分析和用户需求调研，重点实现购物车全选、数量联动、秒杀状态切换、未登录拦截等交互，并输出功能列表、边界条件及页面跳转说明。</p>
+        <div class="media-grid">
+            <div class="media-card" data-src="demo3.mp4" data-type="video">
+                <span class="label">演示视频</span>
+            </div>
+            <div class="media-card" data-src="screenshot3.png" data-type="image">
+                <span class="label">项目首页 · 点击放大</span>
+            </div>
+        </div>
+        <h3>核心工作</h3>
+        <ul>
+            <li><strong>原型搭建</strong>：使用Axure RP 9制作430*886手机界面，覆盖首页、秒杀、商品详情、购物车、分类、话题、搜索等页面</li>
+            <li><strong>交互实现</strong>：实现了购物车全选/数量联动、秒杀倒计时状态切换、未登录拦截、搜索历史记录、话题点赞计数等前端交互逻辑</li>
+            <li><strong>信息架构</strong>：根据团队提供的功能清单，将30+信息点重组为底部5个导航（首页、分类、专题、评价、我的），并画出页面跳转流程图</li>
+        </ul>
+    </div>
+
+    <!-- 项目6：AI产品需求文档辅助生成器 -->
+    <div class="project">
+        <div class="project-header">
+            <h2><span class="dot"></span>AI产品需求文档辅助生成器</h2>
+            <span class="meta-time">2026.03 - 2026.04</span>
+        </div>
+        <div class="tags">
+            <span class="tag">Prompt工程</span><span class="tag">PRD自动化</span><span class="tag">Markdown渲染</span>
+            <span class="tag">前端调模型</span><span class="tag">产品效率工具</span>
+        </div>
+        <p class="desc">为产品经理设计的轻量工具，输入“我要做个登录功能”，30秒内输出一份结构完整的PRD草稿，减少从零写文档的时间。</p>
+        <div class="media-grid">
+            <div class="media-card media-full" data-src="screenshot4.jpg" data-type="image">
+                <span class="label">项目详情 · 点击放大</span>
+            </div>
+        </div>
+        <h3>核心工作</h3>
+        <ul>
+            <li><strong>前端交互</strong>：用HTML+CSS搭了简单的输入区，加了三个示例按钮（积分商城、智能客服、扫码登录），一键填充描述；调用marked.js把返回的Markdown实时渲染成可读页面</li>
+            <li><strong>Prompt设计</strong>：写了结构化系统提示，强制模型输出五段式Markdown，避免自由发挥</li>
+            <li><strong>决策提效</strong>：生成的PRD草稿可作为初始参考，产品经理在此基础上直接修改关键逻辑，跳过空文档阶段，减少从零开始的阻力，间接推动需求评审和开发排期节奏</li>
+        </ul>
+    </div>
+</main>
+
+<!-- 全屏弹窗 -->
+<div class="modal" id="mediaModal" onclick="closeMedia(event)">
+    <div class="modal-content" id="modalContent"></div>
+    <button class="modal-close" onclick="closeMedia(event)">✕</button>
+</div>
+
+<script>
+    // 页面加载时自动渲染所有媒体卡片
+    function initMediaCards() {
+        const cards = document.querySelectorAll('.media-card');
+        cards.forEach(card => {
+            const src = card.getAttribute('data-src');
+            const type = card.getAttribute('data-type');
+            if (!src) return;
+            
+            // 创建预览区域
+            const preview = document.createElement('div');
+            preview.className = 'media-preview';
+            
+            if (type === 'image') {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = '作品截图';
+                img.loading = 'lazy';
+                // 缩略图点击放大
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    openMedia(e, src, 'image');
+                });
+                preview.appendChild(img);
+            } else if (type === 'video') {
+                const video = document.createElement('video');
+                video.src = src;
+                video.controls = true;
+                video.preload = 'metadata';
+                video.style.cursor = 'default';
+                // 视频双击全屏
+                video.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    openMedia(e, src, 'video');
+                });
+                preview.appendChild(video);
+            } else {
+                // 没有有效类型，显示占位图标
+                const placeholder = document.createElement('span');
+                placeholder.className = 'placeholder-icon';
+                placeholder.textContent = '📷';
+                preview.appendChild(placeholder);
+            }
+            
+            // 把预览区域插入到卡片最前面
+            card.insertBefore(preview, card.firstChild);
+        });
+    }
+
+    // 点击缩略图或视频，弹出全屏查看
+    function openMedia(event, src, type) {
+        event.stopPropagation();
+        const modal = document.getElementById('mediaModal');
+        const content = document.getElementById('modalContent');
+        if (type === 'image') {
+            content.innerHTML = `<img src="${src}" alt="作品截图">`;
+        } else if (type === 'video') {
+            content.innerHTML = `<video src="${src}" controls autoplay style="max-width:90vw;max-height:85vh;"></video>`;
+        }
+        modal.classList.add('active');
+    }
+    function closeMedia(event) {
+        if (event.target.id === 'mediaModal' || event.target.classList.contains('modal-close')) {
+            const modal = document.getElementById('mediaModal');
+            modal.classList.remove('active');
+            document.getElementById('modalContent').innerHTML = '';
+        }
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('mediaModal');
+            modal.classList.remove('active');
+            document.getElementById('modalContent').innerHTML = '';
+        }
+    });
+
+    // 页面加载完后初始化
+    window.addEventListener('DOMContentLoaded', initMediaCards);
+</script>
+
+</body>
+</html>
