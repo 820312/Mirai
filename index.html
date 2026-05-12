@@ -45,12 +45,15 @@
             z-index: 100;
         }
         .sidebar .avatar {
-            width: 100px; height: 100px; border-radius: 50%;
-            background: var(--accent-light);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 48px; flex-shrink: 0;
-            border: 4px solid var(--accent);
+            width: 100px; height: 100px;
+            flex-shrink: 0;
             margin-bottom: 20px;
+        }
+        .sidebar .avatar img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent);
         }
         .sidebar h1 {
             font-size: 32px; font-weight: 700; color: var(--accent);
@@ -257,13 +260,15 @@
 
 <!-- 左侧固定个人信息 -->
 <aside class="sidebar">
-    <div class="avatar">🌻</div>
+<div class="avatar">
+    <img src="avatar.jpg" alt="头像" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+</div>
     <h1>曹雨柔</h1>
     <div class="role">AI产品经理</div>
 
     <div class="info-item"><span class="icon">📞</span> 13399227386</div>
     <div class="info-item"><span class="icon">✉️</span> 2085131930@qq.com</div>
-    <div class="info-item"><span class="icon">🔗</span> github.com/yourname</div>
+    <div class="info-item"><span class="icon">🔗</span> https://820312.github.io/Mirai</div>
 
     <div class="floral-divider">🌸 ✦ 🌸</div>
 
