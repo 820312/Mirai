@@ -353,7 +353,7 @@
             <span class="tag">Edge扩展</span><span class="tag">LLM</span><span class="tag">Prompt工程</span>
             <span class="tag">RAG</span><span class="tag">API调用</span><span class="tag">JSONBin</span>
         </div>
-        <p class="desc">针对跨网页收集信息效率低的痛点，开发浏览器插件，选中文字右击即可调用DeepSeek提取摘要与标签，分类存入云端支持随时查看，支持关键词、日期、分类筛选检索，支持对粘贴内容自主分类及删除，支持对分类标签自主增删改，存入内容时同步存入网页地址，通过点击其URL即可回到存入该内容的页面，已累计收集80+条内容，报错率0%。该项目极大的方便了网页信息工作者，抛弃了传统网页信息收集时不同网页来回搜索跳转等繁琐的流程，一站式整理所需所有资料，点击URL直达所需信息。
+        <p class="desc">通过Claude Code辅助开发了一款直接运行在浏览器中的智能剪藏工具。用户在网页中选中文字并右击，即可调用DeepSeek自动提取摘要与标签，分类存入云端。支持随时查看、关键词与日期筛选、自主分类及删除、分类标签增删改。存入内容时同步记录网页地址，点击URL即可回到原文页面。
         </p>
         <div class="media-grid">
             <div class="media-card" data-src="demo1.mp4" data-type="video">
@@ -365,11 +365,10 @@
         </div>
         <h3>核心工作</h3>
         <ul>
-            <li><strong>插件开发</strong>：Manifest V3搭建右键菜单与后台调度，Chrome通知API实现操作反馈</li>
+            <li><strong>插件交互框架</strong>：通过Claude Code搭建代码骨架、Edge右键菜单与后台调度，Chrome通知API实现操作反馈</li>
             <li><strong>Prompt设计</strong>：三层结构化Prompt约束DeepSeek输出JSON Schema，正则剥离Markdown包裹</li>
             <li><strong>上下文增强</strong>：抓取页面标题与选中正文嵌入Prompt，自动生成标签与重点摘要，贴合原文语义</li>
-            <li><strong>API链路</strong>：调通DeepSeek与JSONBin.io，配置token缓存确保可靠写入</li>
-            <li><strong>产品细节</strong>：自测后增加标签搜索、日期筛选、分页、自主增删改和详情弹窗，确保其功能性</li>
+            <li><strong>API链路</strong>：用DeepSeek与JSONBin.io的API联调并配置token缓存，确保从大模型处理到云端写入的每次调用稳定可靠。</li>
         </ul>
     </div>
 
