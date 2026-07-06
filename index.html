@@ -347,7 +347,7 @@
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>剪藏助手</h2>
-            <span class="meta-time">2025.12 - 2026.02</span>
+            <span class="meta-time">2025.12</span>
         </div>
         <div class="tags">
             <span class="tag">Edge扩展</span><span class="tag">LLM</span><span class="tag">Prompt工程</span>
@@ -376,7 +376,7 @@
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>客户反馈智能处理Agent</h2>
-            <span class="meta-time">2026.03 - 2026.04</span>
+            <span class="meta-time">2026.03</span>
         </div>
         <div class="tags">
             <span class="tag">Agent</span><span class="tag">Coze工作流</span><span class="tag">Prompt工程</span>
@@ -400,17 +400,50 @@
         </ul>
     </div>
 
-    <!-- 项目3：智析文档对比系统 -->
+    <!-- 项目3：竞品功能对比分析器 -->
+    <div class="project">
+        <div class="project-header">
+            <h2><span class="dot"></span>竞品功能对比分析器</h2>
+            <span class="meta-time">2026.05</span>
+        </div>
+        <div class="tags">
+            <span class="tag">Claude Code</span><span class="tag">Flask</span><span class="tag">DeepSeek API</span>
+            <span class="tag">Prompt工程</span><span class="tag">竞品分析</span><span class="tag">全栈开发</span>
+        </div>
+        <p class="desc">基于 Claude Code 全栈搭建的 AI 竞品分析工具。输入两个产品的功能描述，调用 DeepSeek 自动生成结构化 Markdown 对比表格（功能维度、差异类型、核心优劣总结）。后端采用 Python Flask，前端原生 HTML/CSS，Prompt 独立抽离为模板模块，temperature 设为 0.1 确保输出稳定。针对模型偶发返回代码块包裹 Markdown 的问题，在代码层增加正则剥离容错处理，避免过度依赖 Prompt 约束。完整记录 <a href="https://github.com/820312/ai-competitor-analyzer" target="_blank" style="color: var(--accent);">AI 协作过程</a>与排错日志，展示从产品决策到代码实现到异常处理的完整链路。</p>
+        <div class="media-grid">
+            <div class="media-card" data-src="input2.png" data-type="image">
+                <span class="label">输入界面 · 点击放大</span>
+            </div>
+            <div class="media-card" data-src="output2.jpg" data-type="image">
+                <span class="label">对比结果 · 点击放大</span>
+            </div>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px;">
+            <a class="download-btn" href="https://github.com/820312/ai-competitor-analyzer" target="_blank">
+                🔗 查看 GitHub 仓库
+            </a>
+        </div>
+        <h3>核心工作</h3>
+        <ul>
+            <li><strong>全栈搭建</strong>：通过 Claude Code 生成 Flask 骨架、前端页面、Prompt 模块，独立完成产品决策与功能定义</li>
+            <li><strong>Prompt 设计</strong>：约束输出为 Markdown 表格（功能维度/A表现/B表现/差异类型），差异类型限定四类减少自由发挥</li>
+            <li><strong>容错机制</strong>：Prompt 为软约束，代码层正则剥离为硬兜底——跨项目复用剪藏助手的容错经验</li>
+            <li><strong>前后端校验</strong>：前端 required + JS 双重校验，后端非空判断兜底，统一错误信息为用户可读的中文提示</li>
+        </ul>
+    </div>
+
+    <!-- 项目4：智析文档对比系统 -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>智析文档对比系统</h2>
-            <span class="meta-time">2026.04 - 2026.05</span>
+            <span class="meta-time">2026.04</span>
         </div>
         <div class="tags">
             <span class="tag">Dify工作流</span><span class="tag">DeepSeek API</span><span class="tag">Prompt工程</span>
             <span class="tag">文档提取</span><span class="tag">Markdown输出</span>
         </div>
-        <p class="desc">针对产品经理在多版本文档（PRD、合同、技术方案）对比中人工逐行比对效率低、易遗漏的痛点，基于 Dify 搭建智能对比工作流。支持上传两份 PDF/Word/txt/jpg等类型文档，自动提取文本并调用 DeepSeek 模型分析功能、技术约束、发布计划等维度的差异，输出结构化 Markdown 表格。创新性加入定向问答能力：用户上传文档时可附带具体问题（如“技术约束有哪些变化”），模型仅返回相关差异，避免信息过载。全流程模块化编排，典型对比任务响应时间 <10 秒，输出可用率从 70% 提升至 95% 以上。</p>
+        <p class=”desc”>针对产品经理在多版本文档（PRD、合同、技术方案）对比中人工逐行比对效率低、易遗漏的痛点，基于 Dify 搭建智能对比工作流。支持上传两份 PDF/Word/txt/jpg等类型文档，自动提取文本并调用 DeepSeek 模型分析功能、技术约束、发布计划等维度的差异，输出结构化 Markdown 表格。创新性加入定向问答能力：用户上传文档时可附带具体问题（如”技术约束有哪些变化”），模型仅返回相关差异，避免信息过载。全流程模块化编排，典型对比任务响应时间 <10 秒，输出可用率从 70% 提升至 95% 以上。</p>
         <div class="media-grid media-3">
             <div class="media-card media-3-item" data-src="doc-compare-1.png" data-type="image">
                 <span class="label">工作流画布 · 点击放大</span>
@@ -431,7 +464,7 @@
         </ul>
     </div>
 
-    <!-- 项目4：KANO调研（含Word下载） -->
+    <!-- 项目5：KANO调研（含Word下载） -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>网易狼人杀 · 用户需求调研</h2>
@@ -455,7 +488,7 @@
         </ul>
     </div>
 
-    <!-- 项目5：美购汇 · 社交电商平台 -->
+    <!-- 项目6：美购汇 · 社交电商平台 -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>美购汇 · 社交电商平台</h2>
@@ -482,11 +515,11 @@
         </ul>
     </div>
 
-    <!-- 项目6：AI产品需求文档辅助生成器 -->
+    <!-- 项目7：AI产品需求文档辅助生成器 -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>AI产品需求文档辅助生成器</h2>
-            <span class="meta-time">2026.03 - 2026.04</span>
+            <span class="meta-time">2026.03</span>
         </div>
         <div class="tags">
             <span class="tag">Prompt工程</span><span class="tag">PRD自动化</span><span class="tag">Markdown渲染</span>
