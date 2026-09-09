@@ -6,162 +6,333 @@
     <title>曹雨柔 · AI产品经理作品集</title>
     <style>
         :root {
-            --bg: #fef9ed;
-            --card: #fffef7;
-            --text: #4a3b2f;
-            --text-secondary: #6b5e4f;
-            --accent: #8b6f4e;
-            --accent-light: #f5efe0;
-            --border: #d4c9b5;
-            --tag-bg: #f2e8d5;
-            --shadow: 0 4px 20px rgba(0,0,0,0.05);
+            --bg: #0a0e1a;
+            --card: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.12);
+            --text: #e8ecf4;
+            --text-secondary: #9aa5bd;
+            --cyan: #22d3ee;
+            --violet: #8b5cf6;
+            --gradient: linear-gradient(135deg, #22d3ee 0%, #8b5cf6 100%);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png'), linear-gradient(180deg, #fef9ed 0%, #fdf3dc 100%);
-            background-attachment: fixed;
-            font-family: 'Georgia', 'Times New Roman', 'STSong', 'Songti SC', 'Noto Serif SC', 'PingFang SC', 'Microsoft YaHei', serif;
+            background: var(--bg);
             color: var(--text);
+            font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
             line-height: 1.7;
-            /* 移除 flex，因为侧边栏用了 fixed */
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* ========== 左侧固定个人信息 ========== */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 360px;
-            height: 100vh;
-            overflow-y: auto;
-            background: var(--card);
-            border-right: 6px double var(--accent);
-            padding: 50px 32px 40px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 2px 0 20px rgba(0,0,0,0.04);
-            z-index: 100;
-        }
-        .sidebar .avatar {
-            width: 100px; height: 100px;
-            flex-shrink: 0;
-            margin-bottom: 20px;
-        }
-        .sidebar .avatar img {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--accent);
-        }
-        .sidebar h1 {
-            font-size: 32px; font-weight: 700; color: var(--accent);
-            letter-spacing: 2px; margin-bottom: 4px;
-        }
-        .sidebar .role {
-            font-size: 18px; color: #b48c5c; font-weight: 600;
-            margin-bottom: 28px; font-style: italic;
-            border-bottom: 2px solid var(--border); padding-bottom: 16px;
-        }
-        .sidebar .info-item {
-            font-size: 14px; color: var(--text-secondary);
-            margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
-        }
-        .sidebar .info-item .icon { font-size: 18px; width: 24px; text-align: center; }
+        ::selection { background: rgba(34, 211, 238, 0.3); }
 
-        .sidebar .floral-divider {
-            text-align: center; font-size: 28px; margin: 24px 0;
-            color: var(--accent); opacity: 0.4; letter-spacing: 6px;
+        /* 滚动条 */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0a0e1a; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+        /* ========== 背景光斑与网格 ========== */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 64px 64px;
         }
-        .sidebar .stats-row { display: flex; gap: 24px; margin: 20px 0; }
-        .sidebar .stat-item { text-align: center; }
-        .sidebar .stat-item .num {
-            font-size: 34px; font-weight: 700; color: var(--accent); line-height: 1;
+        .bg-orb {
+            position: fixed; border-radius: 50%;
+            filter: blur(130px); opacity: 0.32;
+            pointer-events: none; z-index: 0;
+            animation: orb-float 16s ease-in-out infinite alternate;
         }
-        .sidebar .stat-item .label { font-size: 13px; color: var(--text-secondary); }
-        .sidebar .quote {
-            font-size: 13px; color: #b7a48b; font-style: italic;
-            margin-top: auto; padding-top: 24px;
-            border-top: 2px dashed var(--border);
-            text-align: center;
+        .orb-cyan { width: 520px; height: 520px; background: #22d3ee; top: -160px; left: -120px; }
+        .orb-violet { width: 620px; height: 620px; background: #7c3aed; top: 26%; right: -220px; animation-delay: -6s; }
+        .orb-blue { width: 460px; height: 460px; background: #2563eb; bottom: -180px; left: 28%; animation-delay: -11s; }
+        @keyframes orb-float {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(50px, 36px) scale(1.1); }
+        }
+
+        /* ========== 星空视差层 ========== */
+        .star-layer {
+            position: fixed; top: 0; left: 0;
+            width: 1px; height: 1px;
+            z-index: 0; pointer-events: none;
+            will-change: transform;
+        }
+
+        /* ========== 质感叠加层 ========== */
+        .grain {
+            position: fixed; inset: 0; z-index: 3; pointer-events: none;
+            opacity: 0.05; mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        .vignette {
+            position: fixed; inset: 0; z-index: 3; pointer-events: none;
+            background: radial-gradient(ellipse at 50% 42%, transparent 58%, rgba(2, 6, 18, 0.42) 100%);
+        }
+
+        /* ========== 高速滚动光纹 ========== */
+        .warp-lines {
+            position: fixed; inset: 0; z-index: 2; pointer-events: none;
+            opacity: 0; transition: opacity 0.35s;
+            background: radial-gradient(ellipse at center, transparent 55%, rgba(34, 211, 238, 0.08) 100%);
+        }
+        .warp-lines::before {
+            content: ''; position: absolute; inset: -25%;
+            background: repeating-linear-gradient(100deg,
+                transparent 0 60px, rgba(125, 211, 252, 0.06) 60px 61px,
+                transparent 61px 130px, rgba(196, 181, 253, 0.06) 130px 131px);
+            animation: warp-drift 0.9s linear infinite;
+        }
+        .warp-lines.active { opacity: 1; }
+        @keyframes warp-drift {
+            from { transform: translateY(0); }
+            to { transform: translateY(131px); }
+        }
+
+        /* ========== 飞行站台指示 ========== */
+        .hud-rail {
+            position: fixed; right: 22px; top: 50%;
+            transform: translateY(-50%);
+            z-index: 60;
+            display: flex; flex-direction: column; align-items: center; gap: 14px;
+            padding: 16px 10px;
+            background: rgba(13, 18, 38, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            overflow: hidden;
+        }
+        .hud-progress {
+            position: absolute; top: 18px; bottom: 18px; left: 50%;
+            width: 2px; transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.08); border-radius: 2px;
+        }
+        .hud-progress-fill {
+            position: absolute; top: 0; left: 0; width: 100%;
+            background: var(--gradient); border-radius: 2px; height: 0%;
+            box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+        }
+        .hud-dot {
+            position: relative; z-index: 1;
+            width: 28px; height: 28px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 700; color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(10, 14, 26, 0.9);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .hud-dot:hover:not(.active) {
+            color: var(--cyan);
+            border-color: rgba(34, 211, 238, 0.6);
+            transform: scale(1.12);
+        }
+        .hud-dot.active {
+            color: #04121a;
+            background: var(--gradient);
+            border-color: transparent;
+            box-shadow: 0 0 14px rgba(34, 211, 238, 0.6);
+            transform: scale(1.15);
+        }
+
+        /* ========== 顶部英雄区 ========== */
+        .hero {
+            position: relative; z-index: 1; text-align: center; padding: 64px 20px 26px;
+            will-change: transform, opacity;
+            transform: translateY(calc(var(--hero-s, 0) * -60px)) scale(calc(1 - var(--hero-s, 0) * 0.15));
+            opacity: calc(1 - var(--hero-s, 0) * 0.75);
+        }
+        .hero .avatar {
+            width: 118px; height: 118px; margin: 0 auto 22px;
+            border-radius: 50%; padding: 4px;
+            background: var(--gradient);
+            box-shadow: 0 0 44px rgba(139, 92, 246, 0.45);
+        }
+        .hero .avatar img {
+            width: 100%; height: 100%; border-radius: 50%;
+            object-fit: cover; border: 3px solid #0a0e1a; display: block;
+        }
+        .hero h1 {
+            font-size: 40px; font-weight: 800; letter-spacing: 3px; line-height: 1.2;
+            background: var(--gradient);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            filter: drop-shadow(0 0 18px rgba(139, 92, 246, 0.35));
+        }
+        .hero .role {
+            display: inline-flex; align-items: center; gap: 12px;
+            color: var(--cyan); font-size: 15px; letter-spacing: 5px; font-weight: 500;
+            margin: 8px 0 12px;
+        }
+        .hero .role::before, .hero .role::after {
+            content: ''; width: 34px; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(34,211,238,0.7));
+        }
+        .hero .role::after { background: linear-gradient(90deg, rgba(34,211,238,0.7), transparent); }
+        .hero .quote { color: var(--text-secondary); font-size: 14px; margin-bottom: 22px; }
+        .contact-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .contact-chip {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 16px; border-radius: 999px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary); font-size: 13px;
+            text-decoration: none;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            transition: all 0.2s;
+        }
+        .contact-chip:hover { border-color: rgba(34,211,238,0.55); color: var(--cyan); }
+        .contact-chip .icon { font-size: 15px; }
+        /* 英雄区入场：依次浮现 */
+        .hero > * {
+            opacity: 0;
+            transform: translateY(26px);
+            animation: hero-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .hero > *:nth-child(1) { animation-delay: 0.05s; }
+        .hero > *:nth-child(2) { animation-delay: 0.14s; }
+        .hero > *:nth-child(3) { animation-delay: 0.22s; }
+        .hero > *:nth-child(4) { animation-delay: 0.3s; }
+        .hero > *:nth-child(5) { animation-delay: 0.4s; }
+        @keyframes hero-in {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ========== 右侧主内容 ========== */
         .main {
-            margin-left: 360px;
-            height: 100vh;
-            overflow-y: auto;
-            padding: 40px 48px 80px;
-            max-width: none;
+            position: relative; z-index: 1;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 20px 24px 80px;
+        }
+        .section-head { margin: 30px 0 26px; }
+        .section-kicker {
+            font-size: 12px; font-weight: 600; letter-spacing: 5px;
+            color: rgba(34, 211, 238, 0.65); text-transform: uppercase;
+            margin-bottom: 8px;
         }
         .section-title {
-            font-size: 26px; font-weight: 700; color: var(--accent);
-            margin-bottom: 32px; letter-spacing: 2px;
-            display: flex; align-items: center; gap: 10px;
+            font-size: 22px; font-weight: 700; color: var(--text);
+            letter-spacing: 2px;
+            display: flex; align-items: center; gap: 14px;
+            text-shadow: 0 0 24px rgba(34, 211, 238, 0.12);
         }
-        .section-title::before { content: '🌿'; font-size: 28px; }
+        .section-title::after {
+            content: ''; flex: 1; height: 2px;
+            background: repeating-linear-gradient(90deg, rgba(34,211,238,0.55) 0 10px, transparent 10px 18px);
+        }
 
         /* 项目卡片 */
         .project {
             background: var(--card);
-            border: 5px double var(--accent);
-            border-radius: 28px;
-            padding: 36px 40px;
-            margin-bottom: 32px;
-            box-shadow: var(--shadow);
-            transition: box-shadow 0.25s, transform 0.25s;
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 32px 36px;
+            margin-bottom: 28px;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+            transition:
+                opacity 1s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
+                filter 1s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
             position: relative;
+            overflow: hidden;
+            scroll-margin-top: 24px;
+            will-change: transform, opacity, filter;
+            /* 入场：镜头对焦式淡入（.revealed 触发）；--fly 由 JS 驱动零重力漂移 */
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(calc(var(--fly, 0) * -30px));
         }
-        .project:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-2px); }
-        .project::after {
-            content: '🍂'; position: absolute; top: 16px; right: 20px;
-            font-size: 28px; opacity: 0.35;
+        .project.revealed { opacity: 1; filter: blur(0); }
+        /* 站点幽灵编号 */
+        .project .ghost-num {
+            position: absolute; top: 2px; right: 24px;
+            font-size: 96px; font-weight: 800; line-height: 1;
+            z-index: -1; pointer-events: none; user-select: none;
+            background: linear-gradient(180deg, rgba(34, 211, 238, 0.5), rgba(139, 92, 246, 0.25));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            opacity: 0.16;
+            letter-spacing: 2px;
         }
+        /* 光标聚光层 */
+        .project .spotlight {
+            position: absolute; inset: 0;
+            z-index: 1; pointer-events: none;
+            opacity: 0; transition: opacity 0.35s ease;
+            background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 50%),
+                rgba(34, 211, 238, 0.1), transparent 65%);
+        }
+        .project:hover .spotlight { opacity: 1; }
+        .project::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: var(--gradient);
+            opacity: 0; transition: opacity 0.25s;
+        }
+        .project:hover {
+            border-color: rgba(34, 211, 238, 0.4);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+        }
+        .project:hover::before { opacity: 1; }
         .project-header {
             display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 12px; margin-bottom: 14px;
+            flex-wrap: wrap; gap: 12px; margin-bottom: 4px;
         }
         .project h2 {
-            font-size: 22px; font-weight: 700; color: var(--accent);
+            font-size: 21px; font-weight: 700; color: var(--text);
             letter-spacing: 1px;
             display: flex; align-items: center; gap: 10px;
+            text-shadow: 0 0 24px rgba(34, 211, 238, 0.12);
         }
         .project h2 .dot {
-            width: 12px; height: 12px; border-radius: 50%;
-            background: #c4a35a; display: inline-block;
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--gradient);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.7);
+            flex-shrink: 0;
         }
-        .project .meta-time {
-            font-size: 12px; color: var(--text-secondary);
-            background: var(--tag-bg); padding: 4px 14px; border-radius: 20px;
-            white-space: nowrap; font-weight: 500;
-        }
-        .project .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+        .project .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 16px; }
         .tag {
-            background: var(--accent-light); color: var(--accent);
-            padding: 4px 12px; border-radius: 16px;
-            font-size: 12px; font-weight: 600;
-            border: 1px solid var(--accent);
+            background: rgba(34, 211, 238, 0.08); color: #7dd3fc;
+            padding: 4px 12px; border-radius: 999px;
+            font-size: 12px; font-weight: 500;
+            border: 1px solid rgba(34, 211, 238, 0.25);
         }
         .project .desc {
-            font-size: 15px; color: var(--text-secondary);
-            margin-bottom: 22px; line-height: 1.75;
+            font-size: 14.5px; color: var(--text-secondary);
+            margin-bottom: 20px; line-height: 1.8;
         }
+        .project .desc a { color: #7dd3fc; }
 
         /* 媒体卡片 */
-        .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0 24px; }
+        .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0 22px; }
         .media-card {
-            background: #faf5e8; border-radius: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
             display: flex; flex-direction: column;
-            text-decoration: none; color: var(--accent);
-            border: 3px dashed var(--accent);
+            border: 1px dashed rgba(255, 255, 255, 0.18);
+            overflow: hidden;
+            transition: border-color 0.2s, background 0.2s;
         }
-        .media-card:hover { border-style: solid; background: #f0e6d2; }
+        .media-card:hover {
+            border-style: solid;
+            border-color: rgba(34, 211, 238, 0.5);
+            background: rgba(34, 211, 238, 0.05);
+        }
         .media-card .media-preview {
             width: 100%; flex: 1; min-height: 200px;
             display: flex; align-items: center; justify-content: center;
-            overflow: hidden; border-radius: 15px 15px 0 0;
-            background: #fdfbf3;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.25);
         }
         .media-card .media-preview img {
             width: 100%; height: 100%; object-fit: cover; display: block;
@@ -171,100 +342,89 @@
         }
         .media-card .media-preview .placeholder-icon { font-size: 40px; }
         .media-card .label {
-            padding: 12px 16px; font-size: 13px; font-weight: 500;
+            padding: 10px 14px; font-size: 12.5px; font-weight: 500;
             text-align: center; color: var(--text-secondary);
-            background: rgba(255,255,255,0.5);
-            border-top: 1px dashed var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .media-full { grid-column: 1 / -1; }
-        .media-full .media-preview { min-height: 300px; }
         /* 三列网格 */
         .media-grid.media-3 { grid-template-columns: repeat(3, 1fr); }
         .media-card.media-3-item .media-preview { min-height: 160px; }
+
         /* 核心工作列表 */
         .project h3 {
-            font-size: 18px; font-weight: 600; margin: 20px 0 10px;
-            color: #5a4a3a; display: flex; align-items: center; gap: 8px;
+            font-size: 16px; font-weight: 600; margin: 18px 0 10px;
+            color: var(--text); display: flex; align-items: center; gap: 8px;
         }
-        .project h3::before { content: '🌱'; font-size: 16px; }
+        .project h3::before {
+            content: ''; width: 8px; height: 8px; border-radius: 2px;
+            background: var(--gradient); transform: rotate(45deg); flex-shrink: 0;
+        }
         .project ul {
-            padding-left: 0; font-size: 15px; color: #5a4a3a;
-            display: grid; gap: 6px; list-style: none;
+            padding-left: 0; font-size: 14px; color: #b8c2d6;
+            display: grid; gap: 8px; list-style: none;
         }
         .project ul li {
-            padding: 6px 0 6px 28px; position: relative;
+            padding: 2px 0 2px 22px; position: relative; line-height: 1.7;
         }
         .project ul li::before {
-            content: '✦'; position: absolute; left: 4px; color: var(--accent);
-            font-size: 12px;
+            content: '▸'; position: absolute; left: 2px; color: var(--cyan);
+            font-size: 13px;
         }
         .project ul li strong { color: var(--text); }
 
         /* 下载按钮 */
         .download-btn {
             display: inline-flex; align-items: center; gap: 8px;
-            background: var(--accent); color: #fff; text-decoration: none;
-            padding: 10px 24px; border-radius: 20px; font-size: 14px; font-weight: 600;
-            transition: all 0.2s; margin-top: 8px;
-            border: 2px solid #6b4e2b;
+            background: var(--gradient); color: #fff; text-decoration: none;
+            padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 600;
+            transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+            margin-top: 4px;
+            box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
         }
-        .download-btn:hover { background: #6b4e2b; transform: translateY(-1px); }
+        .download-btn:hover {
+            box-shadow: 0 8px 28px rgba(34, 211, 238, 0.5);
+        }
 
         /* 模态弹窗 */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 999;
+            background: rgba(3, 6, 15, 0.8); backdrop-filter: blur(6px);
+            z-index: 999;
             align-items: center; justify-content: center;
         }
         .modal.active { display: flex; }
         .modal-content {
             max-width: 92vw; max-height: 88vh;
-            border-radius: 20px; overflow: hidden;
-            background: #fff; position: relative;
-            border: 5px solid var(--accent);
+            border-radius: 16px; overflow: hidden;
+            background: #0d1226; position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
         }
         .modal-content img, .modal-content video {
             max-width: 90vw; max-height: 85vh; display: block;
         }
         .modal-close {
             position: absolute; top: 12px; right: 16px;
-            background: rgba(0,0,0,0.5); color: #fff;
-            border: none; width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5); color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            width: 36px; height: 36px; border-radius: 50%;
             font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
-        .modal-close:hover { background: rgba(0,0,0,0.7); }
+        .modal-close:hover { background: rgba(0, 0, 0, 0.7); }
 
-        /* 响应式 */
-        @media (max-width: 900px) {
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-                overflow-y: visible;
-                border-right: none;
-                border-bottom: 6px double var(--accent);
-            }
-            .main {
-                margin-left: 0;
-                height: auto;
-                overflow-y: visible;
-                padding: 24px 16px 60px;
-            }
-            .project { padding: 24px 20px; }
-            .media-grid { grid-template-columns: 1fr; }
-            .media-grid.media-3 { grid-template-columns: 1fr; }
-        }
+        /* 全局提示条 */
         .global-tip {
             position: fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(13, 18, 38, 0.9);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-radius: 40px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            border-left: 4px solid var(--accent);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(34, 211, 238, 0.35);
             max-width: 90%;
             width: auto;
             opacity: 0;
@@ -280,7 +440,7 @@
             align-items: center;
             gap: 12px;
             padding: 12px 24px;
-            color: #fff;
+            color: #cbd5e1;
             font-size: 14px;
             font-family: inherit;
         }
@@ -293,7 +453,7 @@
         .tip-close {
             background: none;
             border: none;
-            color: #fff;
+            color: #cbd5e1;
             font-size: 18px;
             cursor: pointer;
             padding: 0 4px;
@@ -303,7 +463,25 @@
         .tip-close:hover {
             opacity: 1;
         }
+
+        /* 减少动态效果偏好 */
+        @media (prefers-reduced-motion: reduce) {
+            .bg-orb { animation: none; }
+            .project, .hero { transform: none !important; opacity: 1 !important; filter: none !important; }
+            .hero > * { animation: none !important; opacity: 1 !important; transform: none !important; }
+            .star-layer { transform: none !important; }
+            .warp-lines { display: none; }
+        }
+
+        /* 响应式 */
         @media (max-width: 900px) {
+            .hero { padding-top: 44px; }
+            .hero h1 { font-size: 32px; }
+            .main { padding: 16px 16px 60px; }
+            .project { padding: 24px 20px; }
+            .media-grid, .media-grid.media-3 { grid-template-columns: 1fr; }
+            .contact-chip { font-size: 12px; padding: 7px 13px; }
+            .hud-rail { display: none; }
             .tip-content {
                 padding: 10px 16px;
                 gap: 8px;
@@ -311,8 +489,34 @@
             }
         }
     </style>
+    <noscript>
+        <style>
+            .project, .hero > * { opacity: 1 !important; filter: none !important; transform: none !important; animation: none !important; }
+        </style>
+    </noscript>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js" defer></script>
 </head>
 <body>
+
+<!-- 背景光斑 -->
+<div class="bg-orb orb-cyan"></div>
+<div class="bg-orb orb-violet"></div>
+<div class="bg-orb orb-blue"></div>
+
+<!-- 质感叠加层 -->
+<div class="grain"></div>
+<div class="vignette"></div>
+
+<!-- 星空视差层 -->
+<div class="star-layer" id="stars-far"></div>
+<div class="star-layer" id="stars-mid"></div>
+<div class="star-layer" id="stars-near"></div>
+
+<!-- 高速滚动光纹 -->
+<div class="warp-lines" id="warpLines"></div>
+
+<!-- 飞行站台指示 -->
+<nav class="hud-rail" id="hudRail"></nav>
 
 <!-- 全局提示条 -->
 <div id="globalTip" class="global-tip">
@@ -322,32 +526,64 @@
         <button class="tip-close" onclick="closeTip()">✕</button>
     </div>
 </div>
-<!-- 左侧固定个人信息 -->
-<aside class="sidebar">
-<div class="avatar">
-    <img src="avatar.jpg" alt="头像" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
-</div>
+
+<!-- 顶部英雄区 -->
+<header class="hero">
+    <div class="avatar">
+        <img src="avatar.jpg" alt="头像">
+    </div>
     <h1>曹雨柔</h1>
     <div class="role">AI产品经理</div>
+    <div class="contact-row">
+        <span class="contact-chip"><span class="icon">📞</span> 13399227386</span>
+        <a class="contact-chip" href="mailto:2085131930@qq.com"><span class="icon">✉️</span> 2085131930@qq.com</a>
+        <a class="contact-chip" href="https://820312.github.io/Mirai" target="_blank"><span class="icon">🔗</span> 820312.github.io/Mirai</a>
+    </div>
+</header>
 
-    <div class="info-item"><span class="icon">📞</span> 13399227386</div>
-    <div class="info-item"><span class="icon">✉️</span> 2085131930@qq.com</div>
-    <div class="info-item"><span class="icon">🔗</span> https://820312.github.io/Mirai</div>
-
-    <div class="floral-divider">🌸 ✦ 🌸</div>
-
-    <div class="quote">🌾 自然生长，踏实创造</div>
-</aside>
-
-<!-- 右侧滚动内容 -->
+<!-- 项目列表 -->
 <main class="main">
-    <div class="section-title">📂 作品展示</div>
+    <div class="section-head">
+        <div class="section-kicker">PORTFOLIO</div>
+        <div class="section-title">作品展示</div>
+    </div>
 
-    <!-- 项目1：剪藏助手 -->
+    <!-- 项目1：CC-Switcher · 多模型提供商管理 Skill -->
+    <div class="project">
+        <div class="project-header">
+            <h2><span class="dot"></span>CC-Switcher · 多模型提供商管理 Skill</h2>
+        </div>
+        <div class="tags">
+            <span class="tag">Claude Code Skill</span><span class="tag">Agent编排</span><span class="tag">Prompt工程</span>
+            <span class="tag">多模型接入</span><span class="tag">API集成</span><span class="tag">跨平台适配</span>
+        </div>
+        <p class="desc">针对 Claude Code 用户在接入 DeepSeek、通义千问、MiniMax、Kimi 等第三方 LLM 提供商时，配置链路长（手动编辑 JSON、配置环境变量、编写启动脚本）、跨平台差异大（Windows/macOS/Linux 路径与脚本各异）且模型版本更新后本地配置易滞后的问题，基于 Claude Code Skill 机制设计并开发了一套多模型提供商管理 Skill。将多步手动配置收敛为一条自然语言指令，用户只需一句话即可完成「模型调研 → 档位匹配 → 配置生成 → 注入全局设置」的全链路接入。Skill 内置首次配置、新增提供商、删除、模型更新四类工作流，Agent 联网抓取官方文档并按 Opus/Sonnet/Haiku 三档自动匹配模型 ID，自动适配三端平台与 shell 别名，实现多提供商并存、一键切换与模型自动更新。经实测，单个提供商接入从手动 10+ 分钟的多步操作收敛为一句自然语言指令即可完成，提供商切换 1 秒内生效，显著降低配置与维护成本。
+        </p>
+        <div class="media-grid">
+            <div class="media-card" data-src="demo-1.mp4" data-type="video">
+                <span class="label">演示视频（请先点击播放再点击全屏）</span>
+            </div>
+            <div class="media-card" data-src="cc-switcher-menu.png" data-type="image">
+                <span class="label">提供商配置成功示例 · 点击放大</span>
+            </div>
+        </div>
+        <a class="download-btn" href="https://github.com/820312/cc-switcher" target="_blank">
+            🔗 查看 GitHub 仓库
+        </a>
+        <h3>核心工作</h3>
+        <ul>
+            <li><strong>意图识别 · 交互收敛</strong>：将「建目录 → 改 JSON → 配环境变量 → 写启动脚本 → 设别名」的多步手动流程收敛为自然语言单轮指令；通过意图判断自动路由到「首次配置 / 新增提供商 / 删除 / 更新模型」对应工作流，用户一句话即可完成全链路接入</li>
+            <li><strong>Agent 编排 · 模型匹配</strong>：设计四类工作流驱动 Agent 联网抓取提供商官方文档（杜绝凭记忆猜测模型名），按 Anthropic 的 Opus / Sonnet / Haiku 三档定义，将各档位自动映射到提供商的旗舰 / 主力 / 轻量模型 ID，生成统一格式的 provider 配置</li>
+            <li><strong>跨平台适配</strong>：自动检测 macOS / Linux / Windows 平台，生成对应的启动脚本（launch.sh / launch.ps1）与路径定义；Windows 无需额外依赖，macOS 自动安装 fzf、jq，并自动注入 shell 别名 <code>cc</code>，一条命令即可启动并选择提供商</li>
+            <li><strong>配置生成与注入</strong>：统一 provider JSON 格式（顶层 <code>docs_url</code> + <code>env</code> 环境变量组），启动脚本动态扫描 providers 目录实现多提供商并存与即时切换；选择结果写入全局 settings.json，所有终端共享同一提供商</li>
+            <li><strong>持续迭代 · 容错</strong>：针对提供商模型版本更新导致本地配置滞后的问题，新增基于 <code>docs_url</code> 的模型自动更新工作流（仅更新模型字段、保留 API Key）；持续优化 Skill 描述文本与触发规则，修正实际使用中的触发偏差，提升命中率与可用性</li>
+        </ul>
+    </div>
+
+    <!-- 项目2：剪藏助手 -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>剪藏助手</h2>
-            <span class="meta-time">2025.12</span>
         </div>
         <div class="tags">
             <span class="tag">Edge扩展</span><span class="tag">LLM</span><span class="tag">Prompt工程</span>
@@ -356,7 +592,7 @@
         <p class="desc">通过Claude Code辅助开发了一款直接运行在浏览器中的智能剪藏工具。用户在网页中选中文字并右击，即可调用DeepSeek自动提取摘要与标签，分类存入云端。支持随时查看、关键词与日期筛选、自主分类及删除、分类标签增删改。存入内容时同步记录网页地址，点击URL即可回到原文页面。
         </p>
         <div class="media-grid">
-            <div class="media-card" data-src="demo1.mp4" data-type="video">
+            <div class="media-card" data-src="demo-2.mp4" data-type="video">
                 <span class="label">演示视频（请先点击播放再点击全屏）</span>
             </div>
             <div class="media-card" data-src="screenshot1.jpg" data-type="image">
@@ -372,11 +608,10 @@
         </ul>
     </div>
 
-    <!-- 项目2：客户反馈Agent -->
+    <!-- 项目3：客户反馈智能处理Agent -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>客户反馈智能处理Agent</h2>
-            <span class="meta-time">2026.03</span>
         </div>
         <div class="tags">
             <span class="tag">Agent</span><span class="tag">Coze工作流</span><span class="tag">Prompt工程</span>
@@ -384,7 +619,7 @@
         </div>
         <p class="desc">该项目是作为售后流程的分支，主要针对用户售后反馈搭建智能反馈处理Agent，针对客服团队人工处理用户反馈“分类耗时长、信息散落、响应不及时”的痛点，设计了该项目：通过对客户反馈进行意图、情感分析，自动区分好评、建议与Bug；其中Bug按紧急度划分为紧急Bug和普通Bug。将Bug与建议自动写入飞书多维表格，并对反馈客户做出相应回应。从而完整实现从反馈输入、自动分类、智能分流、多维度分析，到飞书多维表格自动写入的闭环流程。该项目不仅可以作为智能反馈客服，还可以节省人工收集处理建议的时间，大大提高了工作效率。</p>
         <div class="media-grid">
-            <div class="media-card" data-src="demo2.mp4" data-type="video">
+            <div class="media-card" data-src="demo-3.mp4" data-type="video">
                 <span class="label">对话演示（请先点击播放再点击全屏）</span>
             </div>
             <div class="media-card" data-src="screenshot2.png" data-type="image">
@@ -400,17 +635,16 @@
         </ul>
     </div>
 
-    <!-- 项目3：竞品功能对比分析器 -->
+    <!-- 项目4：竞品功能对比分析器 -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>竞品功能对比分析器</h2>
-            <span class="meta-time">2026.05</span>
         </div>
         <div class="tags">
             <span class="tag">Claude Code</span><span class="tag">Flask</span><span class="tag">DeepSeek API</span>
             <span class="tag">Prompt工程</span><span class="tag">竞品分析</span><span class="tag">全栈开发</span>
         </div>
-        <p class="desc">基于 Claude Code 全栈搭建的 AI 竞品分析工具。输入两个产品的功能描述，调用 DeepSeek 自动生成结构化 Markdown 对比表格（功能维度、差异类型、核心优劣总结）。后端采用 Python Flask，前端原生 HTML/CSS，Prompt 独立抽离为模板模块，temperature 设为 0.1 确保输出稳定。针对模型偶发返回代码块包裹 Markdown 的问题，在代码层增加正则剥离容错处理，避免过度依赖 Prompt 约束。完整记录 <a href="https://github.com/820312/ai-competitor-analyzer" target="_blank" style="color: var(--accent);">AI 协作过程</a>与排错日志，展示从产品决策到代码实现到异常处理的完整链路。</p>
+        <p class="desc">基于 Claude Code 全栈搭建的 AI 竞品分析工具。输入两个产品的功能描述，调用 DeepSeek 自动生成结构化 Markdown 对比表格（功能维度、差异类型、核心优劣总结）。后端采用 Python Flask，前端原生 HTML/CSS，Prompt 独立抽离为模板模块，temperature 设为 0.1 确保输出稳定。针对模型偶发返回代码块包裹 Markdown 的问题，在代码层增加正则剥离容错处理，避免过度依赖 Prompt 约束。完整记录 <a href="https://github.com/820312/ai-competitor-analyzer" target="_blank">AI 协作过程</a>与排错日志，展示从产品决策到代码实现到异常处理的完整链路。</p>
         <div class="media-grid">
             <div class="media-card" data-src="input2.png" data-type="image">
                 <span class="label">输入界面 · 点击放大</span>
@@ -419,11 +653,9 @@
                 <span class="label">对比结果 · 点击放大</span>
             </div>
         </div>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px;">
-            <a class="download-btn" href="https://github.com/820312/ai-competitor-analyzer" target="_blank">
-                🔗 查看 GitHub 仓库
-            </a>
-        </div>
+        <a class="download-btn" href="https://github.com/820312/ai-competitor-analyzer" target="_blank">
+            🔗 查看 GitHub 仓库
+        </a>
         <h3>核心工作</h3>
         <ul>
             <li><strong>全栈搭建</strong>：通过 Claude Code 生成 Flask 骨架、前端页面、Prompt 模块，独立完成产品决策与功能定义</li>
@@ -433,17 +665,16 @@
         </ul>
     </div>
 
-    <!-- 项目4：智析文档对比系统 -->
+    <!-- 项目5：智析文档对比系统 -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>智析文档对比系统</h2>
-            <span class="meta-time">2026.04</span>
         </div>
         <div class="tags">
             <span class="tag">Dify工作流</span><span class="tag">DeepSeek API</span><span class="tag">Prompt工程</span>
             <span class="tag">文档提取</span><span class="tag">Markdown输出</span>
         </div>
-        <p class=”desc”>针对产品经理在多版本文档（PRD、合同、技术方案）对比中人工逐行比对效率低、易遗漏的痛点，基于 Dify 搭建智能对比工作流。支持上传两份 PDF/Word/txt/jpg等类型文档，自动提取文本并调用 DeepSeek 模型分析功能、技术约束、发布计划等维度的差异，输出结构化 Markdown 表格。创新性加入定向问答能力：用户上传文档时可附带具体问题（如”技术约束有哪些变化”），模型仅返回相关差异，避免信息过载。全流程模块化编排，典型对比任务响应时间 <10 秒，输出可用率从 70% 提升至 95% 以上。</p>
+        <p class="desc">针对产品经理在多版本文档（PRD、合同、技术方案）对比中人工逐行比对效率低、易遗漏的痛点，基于 Dify 搭建智能对比工作流。支持上传两份 PDF/Word/txt/jpg等类型文档，自动提取文本并调用 DeepSeek 模型分析功能、技术约束、发布计划等维度的差异，输出结构化 Markdown 表格。创新性加入定向问答能力：用户上传文档时可附带具体问题（如”技术约束有哪些变化”），模型仅返回相关差异，避免信息过载。全流程模块化编排，典型对比任务响应时间 <10 秒，输出可用率从 70% 提升至 95% 以上。</p>
         <div class="media-grid media-3">
             <div class="media-card media-3-item" data-src="doc-compare-1.png" data-type="image">
                 <span class="label">工作流画布 · 点击放大</span>
@@ -464,35 +695,10 @@
         </ul>
     </div>
 
-    <!-- 项目5：KANO调研（含Word下载） -->
-    <div class="project">
-        <div class="project-header">
-            <h2><span class="dot"></span>网易狼人杀 · 用户需求调研</h2>
-            <span class="meta-time">2025.09 - 2025.11</span>
-        </div>
-        <div class="tags">
-            <span class="tag">KANO模型</span><span class="tag">SPSS</span><span class="tag">用户分析</span>
-            <span class="tag">需求优先级</span><span class="tag">探索性因子分析</span>
-        </div>
-        <p class="desc">针对狼人杀玩家匹配、发言辅助、身份推理等痛点，用KANO模型完成需求分层，回收200+有效样本，通过SPSS信效度检验与Better-Worse系数分析，输出15个功能的需求属性与优先级排序。</p>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px;">
-            <a class="download-btn" href="狼人杀用户需求调研.pdf" target="_blank">
-                📄 在线查看PDF
-            </a>
-        </div>
-        <h3>核心工作</h3>
-        <ul>
-            <li><strong>用户洞察</strong>：问卷回收200+样本，结合深度访谈识别新手与女性玩家对“辅助推理”的高需求</li>
-            <li><strong>数据分析</strong>：SPSS信效度检验与探索性因子分析，区分必备/期望/魅力/无差异四类属性</li>
-            <li><strong>方案输出</strong>：设计AI发言润色与赛后复盘功能，输出优先级矩阵与MVP迭代路径</li>
-        </ul>
-    </div>
-
     <!-- 项目6：美购汇 · 社交电商平台 -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>美购汇 · 社交电商平台</h2>
-            <span class="meta-time">2025.11 - 2026.03</span>
         </div>
         <div class="tags">
             <span class="tag">Axure RP 9</span><span class="tag">交互设计</span><span class="tag">原型设计</span>
@@ -500,7 +706,7 @@
         </div>
         <p class="desc">课程小组项目，设计一个带话题社区的电商App。我在团队中负责高保真原型制作、页面交互逻辑实现。团队前期已完成竞品分析和用户需求调研，重点实现购物车全选、数量联动、秒杀状态切换、未登录拦截等交互，并输出功能列表、边界条件及页面跳转说明。</p>
         <div class="media-grid">
-            <div class="media-card" data-src="demo3.mp4" data-type="video">
+            <div class="media-card" data-src="demo-4.mp4" data-type="video">
                 <span class="label">演示视频</span>
             </div>
             <div class="media-card" data-src="screenshot3.png" data-type="image">
@@ -515,29 +721,6 @@
         </ul>
     </div>
 
-    <!-- 项目7：AI产品需求文档辅助生成器 -->
-    <div class="project">
-        <div class="project-header">
-            <h2><span class="dot"></span>AI产品需求文档辅助生成器</h2>
-            <span class="meta-time">2026.03</span>
-        </div>
-        <div class="tags">
-            <span class="tag">Prompt工程</span><span class="tag">PRD自动化</span><span class="tag">Markdown渲染</span>
-            <span class="tag">前端调模型</span><span class="tag">产品效率工具</span>
-        </div>
-        <p class="desc">为产品经理设计的轻量工具，输入“我要做个登录功能”，30秒内输出一份结构完整的PRD草稿，减少从零写文档的时间。</p>
-        <div class="media-grid">
-            <div class="media-card media-full" data-src="screenshot4.jpg" data-type="image">
-                <span class="label">项目详情 · 点击放大</span>
-            </div>
-        </div>
-        <h3>核心工作</h3>
-        <ul>
-            <li><strong>前端交互</strong>：用HTML+CSS搭了简单的输入区，加了三个示例按钮（积分商城、智能客服、扫码登录），一键填充描述；调用marked.js把返回的Markdown实时渲染成可读页面</li>
-            <li><strong>Prompt设计</strong>：写了结构化系统提示，强制模型输出五段式Markdown，避免自由发挥</li>
-            <li><strong>决策提效</strong>：生成的PRD草稿可作为初始参考，产品经理在此基础上直接修改关键逻辑，跳过空文档阶段，减少从零开始的阻力，间接推动需求评审和开发排期节奏</li>
-        </ul>
-    </div>
 </main>
 
 <!-- 全屏弹窗 -->
@@ -548,17 +731,23 @@
 
 <script>
     // 页面加载时自动渲染所有媒体卡片
+    function makePlaceholder(icon) {
+        const placeholder = document.createElement('span');
+        placeholder.className = 'placeholder-icon';
+        placeholder.textContent = icon;
+        return placeholder;
+    }
     function initMediaCards() {
         const cards = document.querySelectorAll('.media-card');
         cards.forEach(card => {
             const src = card.getAttribute('data-src');
             const type = card.getAttribute('data-type');
             if (!src) return;
-            
+
             // 创建预览区域
             const preview = document.createElement('div');
             preview.className = 'media-preview';
-            
+
             if (type === 'image') {
                 const img = document.createElement('img');
                 img.src = src;
@@ -570,6 +759,10 @@
                     e.stopPropagation();
                     openMedia(e, src, 'image');
                 });
+                // 文件暂缺时显示占位图标，避免破图
+                img.addEventListener('error', function() {
+                    preview.replaceChildren(makePlaceholder('📷'));
+                });
                 preview.appendChild(img);
             } else if (type === 'video') {
                 const video = document.createElement('video');
@@ -577,20 +770,21 @@
                 video.controls = true;
                 video.preload = 'metadata';
                 video.style.cursor = 'default';
-                // 视频双击全屏
+                // 点击视频弹出全屏查看
                 video.addEventListener('click', function(e) {
                     e.stopPropagation();
                     openMedia(e, src, 'video');
                 });
+                // 文件暂缺时显示占位图标，避免黑屏
+                video.addEventListener('error', function() {
+                    preview.replaceChildren(makePlaceholder('🎬'));
+                });
                 preview.appendChild(video);
             } else {
                 // 没有有效类型，显示占位图标
-                const placeholder = document.createElement('span');
-                placeholder.className = 'placeholder-icon';
-                placeholder.textContent = '📷';
-                preview.appendChild(placeholder);
+                preview.appendChild(makePlaceholder('📷'));
             }
-            
+
             // 把预览区域插入到卡片最前面
             card.insertBefore(preview, card.firstChild);
         });
@@ -616,27 +810,203 @@
         if (type === 'image') {
             content.innerHTML = `<img src="${src}" alt="作品截图">`;
         } else if (type === 'video') {
-            content.innerHTML = `<video src="${src}" controls autoplay style="max-width:90vw;max-height:85vh;"></video>`;
+            content.innerHTML = `<video src="${src}" controls autoplay></video>`;
         }
         modal.classList.add('active');
     }
+    function hideMedia() {
+        document.getElementById('mediaModal').classList.remove('active');
+        document.getElementById('modalContent').innerHTML = '';
+    }
     function closeMedia(event) {
-        if (event.target.id === 'mediaModal' || event.target.classList.contains('modal-close')) {
-            const modal = document.getElementById('mediaModal');
-            modal.classList.remove('active');
-            document.getElementById('modalContent').innerHTML = '';
-        }
+        if (event.target.id === 'mediaModal' || event.target.classList.contains('modal-close')) hideMedia();
     }
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            const modal = document.getElementById('mediaModal');
-            modal.classList.remove('active');
-            document.getElementById('modalContent').innerHTML = '';
-        }
+        if (e.key === 'Escape') hideMedia();
     });
 
     // 页面加载完后初始化
     window.addEventListener('DOMContentLoaded', initMediaCards);
+
+    /* ========== 飞行穿梭效果 ========== */
+    // 三层星空：远景慢、近景快，滚动时产生向后飞掠的视差
+    const starLayers = [
+        { id: 'stars-far', speed: 0.05, count: 150, min: 0.5, max: 1, colors: [[226,232,244],[148,163,184]], alpha: 0.7 },
+        { id: 'stars-mid', speed: 0.11, count: 90, min: 1, max: 1.8, colors: [[186,230,253],[203,213,225]], alpha: 0.85 },
+        { id: 'stars-near', speed: 0.2, count: 40, min: 1.6, max: 2.6, colors: [[125,211,252],[196,181,253],[224,242,254]], alpha: 0.95 }
+    ];
+    function makeStars(layer) {
+        const el = document.getElementById(layer.id);
+        if (!el) return;
+        const shadows = [];
+        for (let i = 0; i < layer.count; i++) {
+            const x = (Math.random() * 100).toFixed(2);
+            const y = (Math.random() * 300).toFixed(2);   // 纵向铺满 300vh，避免滚到底星空跑空
+            const s = (Math.random() * (layer.max - layer.min) + layer.min).toFixed(2);
+            const c = layer.colors[(Math.random() * layer.colors.length) | 0];
+            const o = (Math.random() * 0.5 + 0.3).toFixed(2);
+            shadows.push(`${x}vw ${y}vh 1px ${s}px rgba(${c[0]},${c[1]},${c[2]},${o})`);
+        }
+        el.style.boxShadow = shadows.join(',');
+        el.style.opacity = layer.alpha;
+    }
+    function buildHud() {
+        const rail = document.getElementById('hudRail');
+        const projects = document.querySelectorAll('.project');
+        if (!rail || !projects.length) return null;
+        const progress = document.createElement('span');
+        progress.className = 'hud-progress';
+        const fill = document.createElement('span');
+        fill.className = 'hud-progress-fill';
+        progress.appendChild(fill);
+        rail.appendChild(progress);
+        projects.forEach((_, i) => {
+            const dot = document.createElement('span');
+            dot.className = 'hud-dot';
+            dot.textContent = String(i + 1).padStart(2, '0');
+            dot.title = `跳转到项目 ${i + 1}`;
+            rail.appendChild(dot);
+        });
+        return { dots: Array.from(rail.querySelectorAll('.hud-dot')), fill: fill };
+    }
+    function clampNum(v, min, max) { return Math.min(Math.max(v, min), max); }
+    function initFlightFx() {
+        starLayers.forEach(makeStars);
+        const projects = document.querySelectorAll('.project');
+        const hero = document.querySelector('.hero');
+        const warp = document.getElementById('warpLines');
+        const hud = buildHud();
+        const doc = document.documentElement;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // 平滑滚动（Lenis 提供惯性滑行；CDN 加载失败则回退原生滚动）
+        let lenis = null;
+        if (window.Lenis && !reduceMotion) {
+            lenis = new Lenis({ lerp: 0.08 });
+            const rafLenis = (t) => { lenis.raf(t); requestAnimationFrame(rafLenis); };
+            requestAnimationFrame(rafLenis);
+        }
+
+        // 站台序号点击 → 平滑跳转到对应项目
+        if (hud) {
+            hud.dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => {
+                    const target = projects[i];
+                    if (!target) return;
+                    if (lenis) lenis.scrollTo(target, { offset: -24, duration: 1.4 });
+                    else target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        }
+
+        // 项目入场：加载时视口内的卡片带级联淡入，其余滚动进入时对焦淡入
+        function reveal(card, delay) {
+            card.style.setProperty('--delay', delay + 's');
+            card.classList.add('revealed');
+        }
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(en => {
+                if (en.isIntersecting) { reveal(en.target, 0); io.unobserve(en.target); }
+            });
+        }, { threshold: 0.06 });
+        projects.forEach((card, i) => {
+            if (card.getBoundingClientRect().top < window.innerHeight - 40) {
+                reveal(card, Math.min(i * 0.09, 0.55));
+            } else {
+                io.observe(card);
+            }
+            // 站点幽灵编号 + 光标聚光层
+            const ghost = document.createElement('span');
+            ghost.className = 'ghost-num';
+            ghost.textContent = String(i + 1).padStart(2, '0');
+            const spot = document.createElement('div');
+            spot.className = 'spotlight';
+            card.insertBefore(spot, card.firstChild);
+            card.insertBefore(ghost, card.firstChild);
+            if (!reduceMotion) {
+                card.addEventListener('mousemove', e => {
+                    const r = card.getBoundingClientRect();
+                    card.style.setProperty('--mx', (e.clientX - r.left).toFixed(1) + 'px');
+                    card.style.setProperty('--my', (e.clientY - r.top).toFixed(1) + 'px');
+                });
+            }
+        });
+
+        // 磁性按钮：鼠标悬停时按钮轻微追随光标
+        if (!reduceMotion) {
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('mousemove', e => {
+                    const r = btn.getBoundingClientRect();
+                    const dx = (e.clientX - r.left - r.width / 2) * 0.18;
+                    const dy = (e.clientY - r.top - r.height / 2) * 0.3;
+                    btn.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`;
+                });
+                btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+            });
+        }
+
+        // 高速滚动光纹：滚轮大力滚动或滚动速度陡增时亮起
+        let warpTimer = null;
+        function triggerWarp() {
+            if (!warp || reduceMotion) return;
+            warp.classList.add('active');
+            clearTimeout(warpTimer);
+            warpTimer = setTimeout(() => warp.classList.remove('active'), 260);
+        }
+        window.addEventListener('wheel', (e) => { if (Math.abs(e.deltaY) > 200) triggerWarp(); }, { passive: true });
+        let lastScrollY = window.scrollY, lastScrollT = performance.now();
+        window.addEventListener('scroll', () => {
+            const t = performance.now();
+            const v = Math.abs(window.scrollY - lastScrollY) / Math.max(t - lastScrollT, 1);
+            if (v > 1.2) triggerWarp();
+            lastScrollY = window.scrollY;
+            lastScrollT = t;
+            targetY = window.scrollY;
+        }, { passive: true });
+
+        // 视觉惯性循环：视差量由缓动后的 curY 驱动，滚动停止后仍有余韵
+        let targetY = window.scrollY;
+        let curY = targetY;
+        function loop() {
+            if (!reduceMotion) {
+                curY += (targetY - curY) * 0.12;
+                if (Math.abs(targetY - curY) < 0.05) curY = targetY;
+            } else {
+                curY = targetY;
+            }
+            const vh = window.innerHeight;
+            // 星空向后飞掠
+            starLayers.forEach(l => {
+                const el = document.getElementById(l.id);
+                if (el) el.style.transform = `translate3d(0, ${-curY * l.speed}px, 0)`;
+            });
+            // 英雄区像起飞后远去
+            if (hero) hero.style.setProperty('--hero-s', clampNum(curY / 700, 0, 1));
+            // 项目卡片零重力漂移
+            projects.forEach(card => {
+                const r = card.getBoundingClientRect();
+                const center = r.top + r.height / 2;
+                const fly = clampNum((vh / 2 - center) / (vh * 0.8), -1, 1);
+                card.style.setProperty('--fly', fly.toFixed(3));
+            });
+            // 站台指示 + 航线进度
+            if (hud) {
+                let best = -1, bestDist = Infinity;
+                projects.forEach((card, i) => {
+                    const r = card.getBoundingClientRect();
+                    const d = Math.abs(r.top + r.height / 2 - vh / 2);
+                    if (d < bestDist) { bestDist = d; best = i; }
+                });
+                hud.dots.forEach((dot, i) => dot.classList.toggle('active', i === best));
+                const max = doc.scrollHeight - vh;
+                if (max > 0) hud.fill.style.height = clampNum((curY / max) * 100, 0, 100).toFixed(1) + '%';
+            }
+            requestAnimationFrame(loop);
+        }
+        window.addEventListener('resize', () => { targetY = window.scrollY; });
+        requestAnimationFrame(loop);
+    }
+    window.addEventListener('DOMContentLoaded', initFlightFx);
 </script>
 
 </body>
