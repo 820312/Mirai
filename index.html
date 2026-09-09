@@ -264,6 +264,33 @@
             opacity: 0.16;
             letter-spacing: 2px;
         }
+        /* 实习徽章与公司信息行 */
+        .badge {
+            display: inline-flex; align-items: center;
+            padding: 2px 10px; border-radius: 999px;
+            font-size: 11px; font-weight: 600; letter-spacing: 1px;
+            border: 1px solid;
+        }
+        .badge-intern { color: #7dd3fc; border-color: rgba(34, 211, 238, 0.4); background: rgba(34, 211, 238, 0.1); }
+        .badge-gold { color: #f0b95c; border-color: rgba(240, 185, 92, 0.5); background: rgba(240, 185, 92, 0.12); }
+        .project-meta {
+            font-size: 13px; color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        /* 灵匠核心项目金色强调 */
+        .project.featured { border-color: rgba(240, 185, 92, 0.35); }
+        .project.featured:hover {
+            border-color: rgba(240, 185, 92, 0.6);
+            box-shadow: 0 12px 44px rgba(240, 161, 58, 0.18);
+        }
+        .project.featured::before { background: linear-gradient(135deg, #f6d365 0%, #f0a13a 100%); }
+        .project.featured h2 .dot {
+            background: linear-gradient(135deg, #f6d365 0%, #f0a13a 100%);
+            box-shadow: 0 0 12px rgba(240, 185, 92, 0.8);
+        }
+        .project.featured .ghost-num {
+            background-image: linear-gradient(180deg, rgba(246, 211, 101, 0.5), rgba(240, 161, 58, 0.25));
+        }
         /* 光标聚光层 */
         .project .spotlight {
             position: absolute; inset: 0;
@@ -310,6 +337,7 @@
         .project .desc {
             font-size: 14.5px; color: var(--text-secondary);
             margin-bottom: 20px; line-height: 1.8;
+            text-indent: 2em;
         }
         .project .desc a { color: #7dd3fc; }
 
@@ -544,11 +572,61 @@
 <!-- 项目列表 -->
 <main class="main">
     <div class="section-head">
-        <div class="section-kicker">PORTFOLIO</div>
-        <div class="section-title">作品展示</div>
+        <div class="section-kicker">INTERNSHIP</div>
+        <div class="section-title">实习项目</div>
     </div>
 
-    <!-- 项目1：CC-Switcher · 多模型提供商管理 Skill -->
+    <!-- 实习项目1：魔方AI · FDE需求采集智能化改造（灵匠） -->
+    <div class="project featured">
+        <div class="project-header">
+            <h2><span class="dot"></span>魔方AI · 搭建FDE需求产品</h2>
+            <span class="badge badge-gold">实习 · 项目</span>
+        </div>
+        <div class="project-meta">   江苏灵匠信息科技有限公司 · AI产品经理</div>
+        <div class="tags">
+            <span class="tag">Figma</span><span class="tag">PRD</span><span class="tag">AI Agent</span>
+            <span class="tag">需求调研</span><span class="tag">产品评审</span><span class="tag">跨境电商</span>
+        </div>
+        <p class="desc">独立负责魔方AI 中 FDE 团队的需求采集智能化改造。改造前我亲历人工采集全流程，1 对 1 深度访谈跨境卖家、收集 37 条一手需求，量化出三大瓶颈（单次访谈 30 分钟至 1 天、表单整理 15 分钟、日跟进上限仅 4 家、填写标准不统一）；随后独立完成产品方案设计、Figma 高保真原型与 PRD，设计「AI 电话 + 在线对话 + 自助表单」三通道 Agent 方案，借助 Codex 生成可交互原型，与研发及内部产品团队完成评审对齐并交付上线——卖家通过 AI 访谈、自助表单或语音通话三种方式，3 分钟说清需求、自动生成结构化需求表，FDE 在后台审批确认即可。上线后预计需求采集效率提升 10 倍以上，FDE 从「访谈+填表」转变为「后台审批+搭建工作流」。</p>
+        <h3>核心工作</h3>
+        <ul>
+            <li><strong>用户调研 · 痛点量化</strong>：亲历 FDE 人工采集全流程，1 对 1 深度访谈跨境卖家、梳理 37 条一手需求（广告投流、获客、选品上架、Listing优化、达人建联、生图、视频、合规检测 8 大场景），量化三大瓶颈——单次访谈 30 分钟至 1 天、表单整理 15 分钟、日跟进上限仅 4 家、FDE 填写标准不统一</li>
+            <li><strong>产品功能设计</strong>：设计三种需求提交方式——AI 访谈助手以自然语言问答逐步引导卖家梳理选品、上架、图片、广告等业务需求，自动生成结构化需求表；卖家也可直接填写表单或语音通话描述需求，提交后 FDE 在后台审批确认，全程 3 分钟说清需求</li>
+            <li><strong>Agent 技术方案</strong>：接入大模型驱动 Agent 实现智能访谈与需求结构化——将卖家口语化描述自动提炼为标准需求字段（场景、优先级、工作流拆解等），统一数据录入标准；语音通话通道由 AI 对话完成采集，替代人工 1 对 1 访谈</li>
+            <li><strong>原型 · PRD · 交付上线</strong>：独立完成产品方案设计，Figma 输出高保真交互原型，借助 Codex 生成可交互原型加速验证；撰写 PRD 明确功能逻辑与边界，与研发及内部产品团队完成评审对齐，产品已内测上线</li>
+            <li><strong>预期成果</strong>：正式上线后需求采集效率提升 10 倍以上，FDE 无需一对一访谈填表，只需后台审批需求、搭建工作流，形成「洞察—设计—验证—再洞察」闭环</li>
+        </ul>
+    </div>
+
+    <!-- 实习项目2：研学业务 AI 智能体矩阵（共创） -->
+    <div class="project">
+        <div class="project-header">
+            <h2><span class="dot"></span>AI Agent 矩阵</h2>
+            <span class="badge badge-intern">实习 · 项目</span>
+        </div>
+        <div class="project-meta">   杭州共创引导技术有限公司 · AI产品经理实习生</div>
+        <div class="tags">
+            <span class="tag">工作流编排</span><span class="tag">Coze</span><span class="tag">Prompt工程</span>
+            <span class="tag">阿里云数据库</span><span class="tag">业务调研</span>
+        </div>
+        <p class="desc">作为产品负责人，从 0 到 1 主导财务、线路、师资 3 个 AI Agent 的落地：深入财务、运营、教务三条业务线调研并输出需求分析文档，独立完成 3 个 Agent 的架构设计、搭建、测试与上线，撰写操作手册并培训业务团队，基于反馈推动 5 项功能优化，形成完整迭代闭环。</p>
+        <p class="desc">成果：财务单据处理效率提升 67%（1 小时 → 20 分钟）、线路方案单次节省 3 小时以上、师资调度从人工翻表变为覆盖 361 位老师的秒级语义匹配。</p>
+        <h3>核心工作</h3>
+        <ul>
+            <li><strong>需求调研 · 能力定义</strong>：深入财务、运营、教务三条业务线，梳理报销、线路、师资的高频人工场景，输出需求分析文档，明确 3 个 Agent 的能力边界与输入输出规范</li>
+            <li><strong>财务管理 Agent</strong>：设计 9 大成本模块（开发/交付/差旅/住宿/餐食/场地/物料保险/摄影/宣发）预算模板并独立交付——预算与实际双列对比、差额与完成率自动计算、导出 Excel 保留公式、自动生成 Excel 报价单；针对 .xlsx 存取易产生模型幻觉及安全的问题，主导将存储方案从Coze沙箱改为数据库操作，协同 2 人开发团队完成 Coze 与阿里云数据库对接——单据处理 1 小时 → 20 分钟，效率提升 67%</li>
+            <li><strong>线路规划 Agent</strong>：设计「需求反问 → 联网搜方案 → 生成行程表 → 保存回顾 → 推文生成」五步工作流并独立交付——反问收集 7 项需求信息，联网推荐 2-3 个含接待/预约/信息来源的备选方案，行程表含开营结营、每日实操与食宿安排，PostgreSQL 持久化保存支持随时修改；推文生成内置 6 条研学合规红线审查——单次方案生成节省 3 小时以上</li>
+            <li><strong>师资管理 Agent</strong>：设计智能推荐、详情查询、历史记录三类场景并独立交付——自然语言提取领域/城市/标签等匹配条件，从 361 位老师的结构化师资库（含擅长标签、可担任类型、协议状态等字段）语义检索，输出主推 1 位 + 备选 3 位的完整信息表与匹配理由，交互记录持久化存储——师资调度从人工翻表变为秒级匹配</li>
+            <li><strong>交付 · 培训 · 迭代</strong>：独立完成 3 个 Agent 的搭建、测试、上线全流程，撰写操作手册并培训业务团队；输出体验反馈报告，基于四大类问题推动 5 项功能优化——路线专属海报提示词库、每日行程预告旁白、行程插图自动匹配、推文标准化板块（服务保障/退费政策/核心目标/核心特点）、HTML 一键输出适配公众号排版</li>
+        </ul>
+    </div>
+
+    <div class="section-head">
+        <div class="section-kicker">PERSONAL PROJECTS</div>
+        <div class="section-title">个人项目</div>
+    </div>
+
+    <!-- 项目3：CC-Switcher · 多模型提供商管理 Skill -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>CC-Switcher · 多模型提供商管理 Skill</h2>
@@ -580,7 +658,7 @@
         </ul>
     </div>
 
-    <!-- 项目2：剪藏助手 -->
+    <!-- 项目4：剪藏助手 -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>剪藏助手</h2>
@@ -608,7 +686,7 @@
         </ul>
     </div>
 
-    <!-- 项目3：客户反馈智能处理Agent -->
+    <!-- 项目5：客户反馈智能处理Agent -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>客户反馈智能处理Agent</h2>
@@ -635,7 +713,7 @@
         </ul>
     </div>
 
-    <!-- 项目4：竞品功能对比分析器 -->
+    <!-- 项目6：竞品功能对比分析器 -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>竞品功能对比分析器</h2>
@@ -665,7 +743,7 @@
         </ul>
     </div>
 
-    <!-- 项目5：智析文档对比系统 -->
+    <!-- 项目7：智析文档对比系统 -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>智析文档对比系统</h2>
@@ -695,7 +773,7 @@
         </ul>
     </div>
 
-    <!-- 项目6：美购汇 · 社交电商平台 -->
+    <!-- 项目8：美购汇 · 社交电商平台 -->
     <div class="project">
         <div class="project-header">
             <h2><span class="dot"></span>美购汇 · 社交电商平台</h2>
