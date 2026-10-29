@@ -237,6 +237,7 @@
 
         /* Hero */
         .hero {
+            position: relative;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -839,16 +840,107 @@
         }
 
         @media (max-width: 768px) {
+            /* 导航与菜单 */
             .nav-links { display: none; }
             .menu-toggle { display: flex; align-items: center; justify-content: center; }
-            .about-grid { grid-template-columns: 1fr; gap: 48px; }
-            .about-stats { grid-template-columns: 1fr; }
-            .skills-grid { grid-template-columns: 1fr; }
-            .project-header { flex-direction: column; gap: 12px; }
-            .project-card { padding: 28px; }
-            section { padding: 80px 0; }
-            .back-top { bottom: 20px; right: 20px; }
-            .media-grid, .media-grid.media-3 { grid-template-columns: 1fr; }
+            .nav-inner { padding: 14px 16px; }
+            .logo { font-size: 17px; }
+
+            /* 布局 */
+            main { padding: 0 20px; }
+            section { padding: 64px 0; }
+
+            /* Hero */
+            .hero {
+                min-height: auto;
+                padding: 96px 0 72px;
+                justify-content: flex-start;
+            }
+            .hero-name-row { gap: 12px; margin-bottom: 28px; }
+            .hero-name { font-size: 26px; }
+            .hero-avatar { width: 48px; height: 48px; border-width: 2px; }
+            .hero h1 {
+                font-size: clamp(32px, 9vw, 44px);
+                margin-bottom: 20px;
+                line-height: 1.25;
+            }
+            .hero-desc {
+                font-size: 16px;
+                margin-bottom: 32px;
+                line-height: 1.75;
+            }
+            .hero-cta {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                padding: 15px 24px;
+                font-size: 15px;
+            }
+            .scroll-hint { bottom: 16px; font-size: 12px; }
+
+            /* About */
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .about-text h2 { font-size: 30px; }
+            .about-text p { font-size: 15.5px; }
+            .about-stats { grid-template-columns: 1fr 1fr; gap: 14px; }
+            .stat { padding: 20px; }
+            .stat-value { font-size: 28px; }
+            .stat-label { font-size: 12.5px; }
+
+            /* 项目 */
+            .filter-tabs { gap: 8px; margin-bottom: 24px; }
+            .filter-btn { padding: 7px 15px; font-size: 12.5px; }
+            .project-card { padding: 24px 20px; }
+            .project-header { flex-direction: column; gap: 10px; }
+            .project-title { font-size: 22px; }
+            .project-meta { font-size: 13px; }
+            .project-desc { font-size: 15px; }
+            .project-details h4 { font-size: 14.5px; }
+            .project-details li { font-size: 14px; }
+            .project-highlights { gap: 8px; }
+            .highlight { font-size: 13px; padding: 8px 13px; }
+            .project-btn {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            /* 媒体 */
+            .media-grid, .media-grid.media-3 { grid-template-columns: 1fr; gap: 12px; }
+            .media-card .media-preview { aspect-ratio: 16 / 10; }
+            .media-card .label { font-size: 11px; padding: 6px 8px; }
+
+            /* 技能 */
+            .skills-grid { grid-template-columns: 1fr; gap: 16px; }
+            .skill-category { padding: 24px; }
+
+            /* 联系 */
+            .contact { padding: 56px 20px; }
+            .contact h2 { font-size: 32px; }
+            .contact p { font-size: 16px; margin-bottom: 24px; }
+            .contact-links { gap: 10px; }
+            .contact-links a,
+            .contact-links span {
+                padding: 12px 18px;
+                font-size: 14px;
+            }
+
+            /* 提示条 */
+            .global-tip { top: 64px; max-width: 92%; }
+            .tip-content { padding: 9px 14px; font-size: 12.5px; gap: 8px; }
+
+            /* 其他 */
+            .back-top { bottom: 20px; right: 20px; width: 40px; height: 40px; }
+            footer { padding: 36px 20px; font-size: 13px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 30px; }
+            .hero-eyebrow { font-size: 13px; }
+            .about-stats { grid-template-columns: 1fr 1fr; }
+            .stat-value { font-size: 24px; }
+            .project-title { font-size: 20px; }
+            .tip-content { font-size: 12px; }
         }
     </style>
 </head>
