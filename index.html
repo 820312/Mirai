@@ -6,458 +6,708 @@
     <title>曹雨柔 · AI产品经理作品集</title>
     <style>
         :root {
-            --bg: #0a0e1a;
-            --card: rgba(255, 255, 255, 0.05);
-            --card-border: rgba(255, 255, 255, 0.12);
-            --text: #e8ecf4;
-            --text-secondary: #9aa5bd;
-            --cyan: #22d3ee;
-            --violet: #8b5cf6;
-            --gradient: linear-gradient(135deg, #22d3ee 0%, #8b5cf6 100%);
+            --bg: #fafaf9;
+            --surface: #ffffff;
+            --nav-bg: rgba(250, 250, 249, 0.82);
+            --text: #1c1917;
+            --text-muted: #78716c;
+            --accent: #0d9488;
+            --accent-light: #ccfbf1;
+            --border: #e7e5e4;
+            --radius: 16px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 28px rgba(0,0,0,0.06);
+            --shadow-hover: 0 20px 48px rgba(0,0,0,0.08);
+        }
+
+        html.dark {
+            --bg: #030712;
+            --surface: rgba(255, 255, 255, 0.05);
+            --nav-bg: rgba(3, 7, 18, 0.7);
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #22d3ee;
+            --accent-light: rgba(34, 211, 238, 0.12);
+            --border: rgba(255, 255, 255, 0.12);
+            --shadow: 0 1px 3px rgba(0,0,0,0.2), 0 12px 28px rgba(0,0,0,0.25);
+            --shadow-hover: 0 20px 48px rgba(0,0,0,0.45);
+        }
+
+        /* 暗色模式：环境光斑 + 噪点（参考 dark-glass 风格） */
+        html.dark body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 20% 15%, rgba(34, 211, 238, 0.16) 0%, transparent 35%),
+                radial-gradient(circle at 80% 60%, rgba(167, 139, 250, 0.13) 0%, transparent 40%),
+                radial-gradient(circle at 50% 100%, rgba(34, 211, 238, 0.08) 0%, transparent 35%);
+        }
+        html.dark body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        html.dark .project-card,
+        html.dark .stat,
+        html.dark .skill-category,
+        html.dark .contact {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        html.dark .hero-cta,
+        html.dark .project-btn {
+            background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 100%);
+            color: #030712;
+        }
+        html.dark .filter-btn.active {
+            background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 100%);
+            color: #030712;
+            border-color: transparent;
+        }
+        html.dark .scroll-hint {
+            color: var(--accent);
+            opacity: 0.9;
+            text-shadow: 0 0 14px rgba(34, 211, 238, 0.55);
+        }
+        html.dark .contact-links a:hover {
+            background: rgba(34, 211, 238, 0.15);
+            color: var(--accent);
+            border-color: rgba(34, 211, 238, 0.5);
+            box-shadow: 0 0 16px rgba(34, 211, 238, 0.25);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html { scroll-behavior: smooth; }
+
         body {
             background: var(--bg);
             color: var(--text);
-            font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            line-height: 1.7;
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.35s ease, color 0.35s ease;
         }
 
-        ::selection { background: rgba(34, 211, 238, 0.3); }
-
-        /* 滚动条 */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #0a0e1a; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 6px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
-
-        /* ========== 背景光斑与网格 ========== */
-        body::before {
-            content: '';
-            position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-            background-size: 64px 64px;
-        }
-        .bg-orb {
-            position: fixed; border-radius: 50%;
-            filter: blur(130px); opacity: 0.32;
-            pointer-events: none; z-index: 0;
-            animation: orb-float 16s ease-in-out infinite alternate;
-        }
-        .orb-cyan { width: 520px; height: 520px; background: #22d3ee; top: -160px; left: -120px; }
-        .orb-violet { width: 620px; height: 620px; background: #7c3aed; top: 26%; right: -220px; animation-delay: -6s; }
-        .orb-blue { width: 460px; height: 460px; background: #2563eb; bottom: -180px; left: 28%; animation-delay: -11s; }
-        @keyframes orb-float {
-            from { transform: translate(0, 0) scale(1); }
-            to { transform: translate(50px, 36px) scale(1.1); }
+        /* Typography */
+        h1, h2, h3 {
+            font-family: "Playfair Display", "Noto Serif SC", Georgia, serif;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
         }
 
-        /* ========== 星空视差层 ========== */
-        .star-layer {
-            position: fixed; top: 0; left: 0;
-            width: 1px; height: 1px;
-            z-index: 0; pointer-events: none;
-            will-change: transform;
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        nav.scrolled { border-color: var(--border); }
+
+        .nav-inner {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* ========== 质感叠加层 ========== */
-        .grain {
-            position: fixed; inset: 0; z-index: 3; pointer-events: none;
-            opacity: 0.05; mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-        .vignette {
-            position: fixed; inset: 0; z-index: 3; pointer-events: none;
-            background: radial-gradient(ellipse at 50% 42%, transparent 58%, rgba(2, 6, 18, 0.42) 100%);
+        .logo {
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.5px;
         }
 
-        /* ========== 高速滚动光纹 ========== */
-        .warp-lines {
-            position: fixed; inset: 0; z-index: 2; pointer-events: none;
-            opacity: 0; transition: opacity 0.35s;
-            background: radial-gradient(ellipse at center, transparent 55%, rgba(34, 211, 238, 0.08) 100%);
-        }
-        .warp-lines::before {
-            content: ''; position: absolute; inset: -25%;
-            background: repeating-linear-gradient(100deg,
-                transparent 0 60px, rgba(125, 211, 252, 0.06) 60px 61px,
-                transparent 61px 130px, rgba(196, 181, 253, 0.06) 130px 131px);
-            animation: warp-drift 0.9s linear infinite;
-        }
-        .warp-lines.active { opacity: 1; }
-        @keyframes warp-drift {
-            from { transform: translateY(0); }
-            to { transform: translateY(131px); }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
         }
 
-        /* ========== 飞行站台指示 ========== */
-        .hud-rail {
-            position: fixed; right: 22px; top: 50%;
-            transform: translateY(-50%);
-            z-index: 60;
-            display: flex; flex-direction: column; align-items: center; gap: 14px;
-            padding: 16px 10px;
-            background: rgba(13, 18, 38, 0.55);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 999px;
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            overflow: hidden;
-        }
-        .hud-progress {
-            position: absolute; top: 18px; bottom: 18px; left: 50%;
-            width: 2px; transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.08); border-radius: 2px;
-        }
-        .hud-progress-fill {
-            position: absolute; top: 0; left: 0; width: 100%;
-            background: var(--gradient); border-radius: 2px; height: 0%;
-            box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
-        }
-        .hud-dot {
-            position: relative; z-index: 1;
-            width: 28px; height: 28px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 10px; font-weight: 700; color: var(--text-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(10, 14, 26, 0.9);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        .hud-dot:hover:not(.active) {
-            color: var(--cyan);
-            border-color: rgba(34, 211, 238, 0.6);
-            transform: scale(1.12);
-        }
-        .hud-dot.active {
-            color: #04121a;
-            background: var(--gradient);
-            border-color: transparent;
-            box-shadow: 0 0 14px rgba(34, 211, 238, 0.6);
-            transform: scale(1.15);
-        }
-
-        /* ========== 顶部英雄区 ========== */
-        .hero {
-            position: relative; z-index: 1; text-align: center; padding: 64px 20px 26px;
-            will-change: transform, opacity;
-            transform: translateY(calc(var(--hero-s, 0) * -60px)) scale(calc(1 - var(--hero-s, 0) * 0.15));
-            opacity: calc(1 - var(--hero-s, 0) * 0.75);
-        }
-        .hero .avatar {
-            width: 118px; height: 118px; margin: 0 auto 22px;
-            border-radius: 50%; padding: 4px;
-            background: var(--gradient);
-            box-shadow: 0 0 44px rgba(139, 92, 246, 0.45);
-        }
-        .hero .avatar img {
-            width: 100%; height: 100%; border-radius: 50%;
-            object-fit: cover; border: 3px solid #0a0e1a; display: block;
-        }
-        .hero h1 {
-            font-size: 40px; font-weight: 800; letter-spacing: 3px; line-height: 1.2;
-            background: var(--gradient);
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent; color: transparent;
-            filter: drop-shadow(0 0 18px rgba(139, 92, 246, 0.35));
-        }
-        .hero .role {
-            display: inline-flex; align-items: center; gap: 12px;
-            color: var(--cyan); font-size: 15px; letter-spacing: 5px; font-weight: 500;
-            margin: 8px 0 12px;
-        }
-        .hero .role::before, .hero .role::after {
-            content: ''; width: 34px; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(34,211,238,0.7));
-        }
-        .hero .role::after { background: linear-gradient(90deg, rgba(34,211,238,0.7), transparent); }
-        .hero .quote { color: var(--text-secondary); font-size: 14px; margin-bottom: 22px; }
-        .contact-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
-        .contact-chip {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 8px 16px; border-radius: 999px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--card-border);
-            color: var(--text-secondary); font-size: 13px;
+        .nav-links a {
+            color: var(--text-muted);
             text-decoration: none;
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active {
+            color: var(--text);
+            font-weight: 600;
+        }
+        .nav-links a.active::after { width: 100%; }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.2s;
         }
-        .contact-chip:hover { border-color: rgba(34,211,238,0.55); color: var(--cyan); }
-        .contact-chip .icon { font-size: 15px; }
-        /* 英雄区入场：依次浮现 */
-        .hero > * {
-            opacity: 0;
-            transform: translateY(26px);
-            animation: hero-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-        .hero > *:nth-child(1) { animation-delay: 0.05s; }
-        .hero > *:nth-child(2) { animation-delay: 0.14s; }
-        .hero > *:nth-child(3) { animation-delay: 0.22s; }
-        .hero > *:nth-child(4) { animation-delay: 0.3s; }
-        .hero > *:nth-child(5) { animation-delay: 0.4s; }
-        @keyframes hero-in {
-            to { opacity: 1; transform: translateY(0); }
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
-        /* ========== 右侧主内容 ========== */
-        .main {
-            position: relative; z-index: 1;
-            max-width: 920px;
-            margin: 0 auto;
-            padding: 20px 24px 80px;
-        }
-        .section-head { margin: 30px 0 26px; }
-        .section-note {
-            font-size: 12.5px; color: var(--text-secondary);
-            opacity: 0.7; letter-spacing: 1px;
-            margin: -12px 0 24px;
-        }
-        .section-kicker {
-            font-size: 12px; font-weight: 600; letter-spacing: 5px;
-            color: rgba(34, 211, 238, 0.65); text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-        .section-title {
-            font-size: 22px; font-weight: 700; color: var(--text);
-            letter-spacing: 2px;
-            display: flex; align-items: center; gap: 14px;
-            text-shadow: 0 0 24px rgba(34, 211, 238, 0.12);
-        }
-        .section-title::after {
-            content: ''; flex: 1; height: 2px;
-            background: repeating-linear-gradient(90deg, rgba(34,211,238,0.55) 0 10px, transparent 10px 18px);
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
         }
 
-        /* 项目卡片 */
-        .project {
-            background: var(--card);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 32px 36px;
-            margin-bottom: 28px;
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-            transition:
-                opacity 1s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
-                filter 1s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
-                border-color 0.25s ease,
-                box-shadow 0.25s ease;
-            position: relative;
-            overflow: hidden;
-            scroll-margin-top: 24px;
-            will-change: transform, opacity, filter;
-            /* 入场：镜头对焦式淡入（.revealed 触发）；--fly 由 JS 驱动零重力漂移 */
-            opacity: 0;
-            filter: blur(10px);
-            transform: translateY(calc(var(--fly, 0) * -30px));
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            padding: 12px 24px 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg);
+            gap: 4px;
         }
-        .project.revealed { opacity: 1; filter: blur(0); }
-        /* 站点幽灵编号 */
-        .project .ghost-num {
-            position: absolute; top: 2px; right: 24px;
-            font-size: 96px; font-weight: 800; line-height: 1;
-            z-index: -1; pointer-events: none; user-select: none;
-            background: linear-gradient(180deg, rgba(34, 211, 238, 0.5), rgba(139, 92, 246, 0.25));
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent; color: transparent;
-            opacity: 0.16;
-            letter-spacing: 2px;
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.2s;
         }
-        /* 实习徽章与公司信息行 */
-        .badge {
-            display: inline-flex; align-items: center;
-            padding: 2px 10px; border-radius: 999px;
-            font-size: 11px; font-weight: 600; letter-spacing: 1px;
-            border: 1px solid;
+        .mobile-menu a:last-child { border-bottom: none; }
+        .mobile-menu a:hover { color: var(--accent); }
+
+        /* Layout */
+        main { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+        section { padding: 120px 0; }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 16px;
         }
-        .badge-intern { color: #7dd3fc; border-color: rgba(34, 211, 238, 0.4); background: rgba(34, 211, 238, 0.1); }
-        .badge-gold { color: #f0b95c; border-color: rgba(240, 185, 92, 0.5); background: rgba(240, 185, 92, 0.12); }
-        .project-meta {
-            font-size: 13px; color: var(--text-secondary);
-            margin-bottom: 4px;
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 80px;
         }
-        /* 灵匠核心项目金色强调 */
-        .project.featured { border-color: rgba(240, 185, 92, 0.35); }
-        .project.featured:hover {
-            border-color: rgba(240, 185, 92, 0.6);
-            box-shadow: 0 12px 44px rgba(240, 161, 58, 0.18);
+
+        .hero-name-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 36px;
         }
-        .project.featured::before { background: linear-gradient(135deg, #f6d365 0%, #f0a13a 100%); }
-        .project.featured h2 .dot {
-            background: linear-gradient(135deg, #f6d365 0%, #f0a13a 100%);
-            box-shadow: 0 0 12px rgba(240, 185, 92, 0.8);
-        }
-        .project.featured .ghost-num {
-            background-image: linear-gradient(180deg, rgba(246, 211, 101, 0.5), rgba(240, 161, 58, 0.25));
-        }
-        /* 光标聚光层 */
-        .project .spotlight {
-            position: absolute; inset: 0;
-            z-index: 1; pointer-events: none;
-            opacity: 0; transition: opacity 0.35s ease;
-            background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 50%),
-                rgba(34, 211, 238, 0.1), transparent 65%);
-        }
-        .project:hover .spotlight { opacity: 1; }
-        .project::before {
-            content: '';
-            position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: var(--gradient);
-            opacity: 0; transition: opacity 0.25s;
-        }
-        .project:hover {
-            border-color: rgba(34, 211, 238, 0.4);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
-        }
-        .project:hover::before { opacity: 1; }
-        .project-header {
-            display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 12px; margin-bottom: 4px;
-        }
-        .project h2 {
-            font-size: 21px; font-weight: 700; color: var(--text);
+        .hero-name {
+            font-family: "Playfair Display", "Noto Serif SC", Georgia, serif;
+            font-size: 34px;
+            font-weight: 700;
             letter-spacing: 1px;
-            display: flex; align-items: center; gap: 10px;
-            text-shadow: 0 0 24px rgba(34, 211, 238, 0.12);
         }
-        .project h2 .dot {
-            width: 10px; height: 10px; border-radius: 50%;
-            background: var(--gradient);
-            box-shadow: 0 0 10px rgba(34, 211, 238, 0.7);
+        .hero-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--accent-light);
+            box-shadow: var(--shadow);
             flex-shrink: 0;
         }
-        .project .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 16px; }
-        .tag {
-            background: rgba(34, 211, 238, 0.08); color: #7dd3fc;
-            padding: 4px 12px; border-radius: 999px;
-            font-size: 12px; font-weight: 500;
-            border: 1px solid rgba(34, 211, 238, 0.25);
+        .hero-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
-        .project .desc {
-            font-size: 14.5px; color: var(--text-secondary);
-            margin-bottom: 20px; line-height: 1.8;
+
+        .hero-eyebrow {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .hero-eyebrow::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: clamp(44px, 8vw, 84px);
+            margin-bottom: 28px;
+            max-width: 880px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-desc {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 620px;
+            margin-bottom: 48px;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--text);
+            color: var(--surface);
+            padding: 16px 28px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-muted);
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: float 2.5s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .about-text h2 {
+            font-size: 40px;
+            margin-bottom: 28px;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 17px;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .stat {
+            padding: 28px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: "Playfair Display", serif;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        /* Projects */
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 48px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s, background 0.35s ease, border-color 0.35s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .project-title {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .project-meta {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .project-tag {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-bottom: 24px;
+            max-width: 760px;
             text-indent: 2em;
         }
-        .project .desc a { color: #7dd3fc; }
+
+        .project-highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .highlight {
+            font-size: 14px;
+            color: var(--text);
+            background: var(--bg);
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .project-details {
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+        }
+        .project-details h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: var(--text);
+        }
+        .project-details ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .project-details li {
+            color: var(--text-muted);
+            font-size: 14.5px;
+            line-height: 1.7;
+            padding-left: 18px;
+            position: relative;
+        }
+        .project-details li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .project-details li strong { color: var(--text); }
 
         /* 媒体卡片 */
-        .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0 22px; }
+        .media-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+        .media-grid.media-3 { grid-template-columns: repeat(3, 1fr); }
         .media-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 14px;
-            display: flex; flex-direction: column;
-            border: 1px dashed rgba(255, 255, 255, 0.18);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
-            transition: border-color 0.2s, background 0.2s;
+            background: var(--surface);
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
         .media-card:hover {
-            border-style: solid;
-            border-color: rgba(34, 211, 238, 0.5);
-            background: rgba(34, 211, 238, 0.05);
+            border-color: var(--accent);
+            box-shadow: var(--shadow);
         }
         .media-card .media-preview {
-            width: 100%; flex: 1; min-height: 200px;
-            display: flex; align-items: center; justify-content: center;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.05);
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.25);
         }
-        .media-card .media-preview img {
-            width: 100%; height: 100%; object-fit: cover; display: block;
-        }
+        html.dark .media-card .media-preview { background: rgba(255, 255, 255, 0.04); }
+        .media-card .media-preview img,
         .media-card .media-preview video {
-            width: 100%; height: 100%; object-fit: cover; display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
-        .media-card .media-preview .placeholder-icon { font-size: 40px; }
         .media-card .label {
-            padding: 10px 14px; font-size: 12.5px; font-weight: 500;
-            text-align: center; color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.02);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 7px 10px;
+            font-size: 11.5px;
+            line-height: 1.5;
+            color: var(--text-muted);
+            opacity: 0.85;
+            text-align: center;
+            letter-spacing: 0.3px;
+            border-top: 1px solid var(--border);
+            background: var(--surface);
         }
-        /* 三列网格 */
-        .media-grid.media-3 { grid-template-columns: repeat(3, 1fr); }
-        .media-card.media-3-item .media-preview { min-height: 160px; }
 
-        /* 核心工作列表 */
-        .project h3 {
-            font-size: 16px; font-weight: 600; margin: 18px 0 10px;
-            color: var(--text); display: flex; align-items: center; gap: 8px;
-        }
-        .project h3::before {
-            content: ''; width: 8px; height: 8px; border-radius: 2px;
-            background: var(--gradient); transform: rotate(45deg); flex-shrink: 0;
-        }
-        .project ul {
-            padding-left: 0; font-size: 14px; color: #b8c2d6;
-            display: grid; gap: 8px; list-style: none;
-        }
-        .project ul li {
-            padding: 2px 0 2px 22px; position: relative; line-height: 1.7;
-        }
-        .project ul li::before {
-            content: '▸'; position: absolute; left: 2px; color: var(--cyan);
+        /* 项目链接按钮 */
+        .project-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--text);
+            color: var(--surface);
+            padding: 10px 20px;
+            border-radius: 999px;
+            text-decoration: none;
             font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .project ul li strong { color: var(--text); }
-
-        /* 下载按钮 */
-        .download-btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: var(--gradient); color: #fff; text-decoration: none;
-            padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 600;
-            transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
-            margin-top: 4px;
-            box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
-        }
-        .download-btn:hover {
-            box-shadow: 0 8px 28px rgba(34, 211, 238, 0.5);
+        .project-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
-        /* 模态弹窗 */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 6, 15, 0.8); backdrop-filter: blur(6px);
-            z-index: 999;
-            align-items: center; justify-content: center;
+        /* 灯箱弹窗 */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
         }
-        .modal.active { display: flex; }
-        .modal-content {
-            max-width: 92vw; max-height: 88vh;
-            border-radius: 16px; overflow: hidden;
-            background: #0d1226; position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        .lightbox.active { display: flex; }
+        .lightbox-content {
+            max-width: 92vw;
+            max-height: 88vh;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
-        .modal-content img, .modal-content video {
-            max-width: 90vw; max-height: 85vh; display: block;
+        .lightbox-content img,
+        .lightbox-content video {
+            max-width: 90vw;
+            max-height: 85vh;
+            display: block;
+            border-radius: 12px;
         }
-        .modal-close {
-            position: absolute; top: 12px; right: 16px;
-            background: rgba(0, 0, 0, 0.5); color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            width: 36px; height: 36px; border-radius: 50%;
-            font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
         }
-        .modal-close:hover { background: rgba(0, 0, 0, 0.7); }
+        .lightbox-close:hover { background: rgba(0, 0, 0, 0.75); }
+
+        /* 滚动入场动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .project-card.reveal { transition-delay: 0.08s; }
+
+        /* 项目筛选 */
+        .projects-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            opacity: 0.75;
+            margin: -8px 0 20px;
+            letter-spacing: 0.5px;
+        }
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 36px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover {
+            color: var(--text);
+            border-color: var(--accent);
+        }
+        .filter-btn.active {
+            background: var(--text);
+            color: var(--surface);
+            border-color: var(--text);
+        }
+
+        .project-card.hidden { display: none; }
+
+        /* 回到顶部 */
+        .back-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 90;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+        .back-top.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .back-top:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* 顶部阅读进度 */
+        .read-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: var(--accent);
+            z-index: 101;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
 
         /* 全局提示条 */
         .global-tip {
             position: fixed;
-            top: 20px;
+            top: 76px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 1000;
-            background: rgba(13, 18, 38, 0.9);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border-radius: 40px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(34, 211, 238, 0.35);
+            z-index: 150;
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 999px;
+            box-shadow: var(--shadow-hover);
+            border: 1px solid var(--accent);
             max-width: 90%;
             width: auto;
             opacity: 0;
@@ -471,14 +721,15 @@
         .tip-content {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 24px;
-            color: #cbd5e1;
-            font-size: 14px;
+            gap: 10px;
+            padding: 10px 20px;
+            color: var(--text-muted);
+            font-size: 13.5px;
             font-family: inherit;
         }
         .tip-icon {
-            font-size: 20px;
+            font-size: 18px;
+            flex-shrink: 0;
         }
         .tip-text {
             line-height: 1.5;
@@ -486,348 +737,719 @@
         .tip-close {
             background: none;
             border: none;
-            color: #cbd5e1;
-            font-size: 18px;
+            color: var(--text-muted);
+            font-size: 16px;
             cursor: pointer;
-            padding: 0 4px;
+            padding: 0 2px;
             opacity: 0.7;
             transition: opacity 0.2s;
+            flex-shrink: 0;
         }
         .tip-close:hover {
             opacity: 1;
         }
 
-        /* 减少动态效果偏好 */
-        @media (prefers-reduced-motion: reduce) {
-            .bg-orb { animation: none; }
-            .project, .hero { transform: none !important; opacity: 1 !important; filter: none !important; }
-            .hero > * { animation: none !important; opacity: 1 !important; transform: none !important; }
-            .star-layer { transform: none !important; }
-            .warp-lines { display: none; }
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
         }
 
-        /* 响应式 */
-        @media (max-width: 900px) {
-            .hero { padding-top: 44px; }
-            .hero h1 { font-size: 32px; }
-            .main { padding: 16px 16px 60px; }
-            .project { padding: 24px 20px; }
+        .skill-category {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+        }
+        .skill-category h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        .skill-category ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .skill-category li {
+            color: var(--text-muted);
+            font-size: 15px;
+            padding-left: 18px;
+            position: relative;
+        }
+        .skill-category li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Contact */
+        .contact {
+            text-align: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 80px 40px;
+            box-shadow: var(--shadow);
+        }
+        .contact h2 {
+            font-size: 44px;
+            margin-bottom: 16px;
+        }
+        .contact p {
+            color: var(--text-muted);
+            font-size: 18px;
+            margin-bottom: 32px;
+        }
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .contact-links a,
+        .contact-links span {
+            color: var(--text);
+            text-decoration: none;
+            padding: 14px 24px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .contact-links span {
+            color: var(--text-muted);
+            cursor: default;
+            user-select: text;
+        }
+        .contact-links a:hover {
+            background: var(--text);
+            color: var(--surface);
+            border-color: var(--text);
+        }
+
+        footer {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: flex; align-items: center; justify-content: center; }
+            .about-grid { grid-template-columns: 1fr; gap: 48px; }
+            .about-stats { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .project-header { flex-direction: column; gap: 12px; }
+            .project-card { padding: 28px; }
+            section { padding: 80px 0; }
+            .back-top { bottom: 20px; right: 20px; }
             .media-grid, .media-grid.media-3 { grid-template-columns: 1fr; }
-            .contact-chip { font-size: 12px; padding: 7px 13px; }
-            .hud-rail { display: none; }
-            .tip-content {
-                padding: 10px 16px;
-                gap: 8px;
-                font-size: 12px;
-            }
         }
     </style>
-    <noscript>
-        <style>
-            .project, .hero > * { opacity: 1 !important; filter: none !important; transform: none !important; animation: none !important; }
-        </style>
-    </noscript>
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js" defer></script>
 </head>
 <body>
+    <div class="read-progress" id="readProgress"></div>
 
-<!-- 背景光斑 -->
-<div class="bg-orb orb-cyan"></div>
-<div class="bg-orb orb-violet"></div>
-<div class="bg-orb orb-blue"></div>
-
-<!-- 质感叠加层 -->
-<div class="grain"></div>
-<div class="vignette"></div>
-
-<!-- 星空视差层 -->
-<div class="star-layer" id="stars-far"></div>
-<div class="star-layer" id="stars-mid"></div>
-<div class="star-layer" id="stars-near"></div>
-
-<!-- 高速滚动光纹 -->
-<div class="warp-lines" id="warpLines"></div>
-
-<!-- 飞行站台指示 -->
-<nav class="hud-rail" id="hudRail"></nav>
-
-<!-- 全局提示条 -->
-<div id="globalTip" class="global-tip">
-    <div class="tip-content">
-        <span class="tip-icon">⏳</span>
-        <span class="tip-text">第一次打开本页面时，视频可能需要 20 秒左右加载（视网络情况而定），劳烦您耐心等待片刻~</span>
-        <button class="tip-close" onclick="closeTip()">✕</button>
-    </div>
-</div>
-
-<!-- 顶部英雄区 -->
-<header class="hero">
-    <div class="avatar">
-        <img src="avatar.jpg" alt="头像">
-    </div>
-    <h1>曹雨柔</h1>
-    <div class="role">AI产品经理</div>
-    <div class="contact-row">
-        <span class="contact-chip"><span class="icon">📞</span> 13399227386</span>
-        <a class="contact-chip" href="mailto:2085131930@qq.com"><span class="icon">✉️</span> 2085131930@qq.com</a>
-        <a class="contact-chip" href="https://820312.github.io/Mirai" target="_blank"><span class="icon">🔗</span> 820312.github.io/Mirai</a>
-    </div>
-</header>
-
-<!-- 项目列表 -->
-<main class="main">
-    <div class="section-head">
-        <div class="section-kicker">INTERNSHIP</div>
-        <div class="section-title">实习项目</div>
-    </div>
-    <p class="section-note">🔒 注：实习项目涉及公司内部机密，不做产品成品展示</p>
-
-    <!-- 实习项目1：魔方AI · FDE需求采集智能化改造（灵匠） -->
-    <div class="project featured">
-        <div class="project-header">
-            <h2><span class="dot"></span>魔方AI · 搭建FDE需求产品</h2>
-            <span class="badge badge-gold">实习 · 项目</span>
+    <!-- 全局提示条 -->
+    <div id="globalTip" class="global-tip">
+        <div class="tip-content">
+            <span class="tip-icon">⏳</span>
+            <span class="tip-text">第一次打开本页面时，视频可能需要 20 秒左右加载（视网络情况而定），劳烦您耐心等待片刻~</span>
+            <button class="tip-close" id="tipClose">✕</button>
         </div>
-        <div class="project-meta">江苏灵匠信息科技有限公司 · AI产品经理</div>
-        <div class="tags">
-            <span class="tag">Figma</span><span class="tag">PRD</span><span class="tag">AI Agent</span>
-            <span class="tag">需求调研</span><span class="tag">产品评审</span><span class="tag">跨境电商</span>
-        </div>
-        <p class="desc">独立负责魔方AI 中 FDE 团队的需求采集智能化改造。改造前我亲历人工采集全流程，1 对 1 深度访谈跨境卖家、收集 37 条一手需求，量化出三大瓶颈（单次访谈 30 分钟至 1 天、表单整理 15 分钟、日跟进上限仅 4 家、填写标准不统一）；随后独立完成产品方案设计、Figma 高保真原型与 PRD，设计「AI 电话 + 在线对话 + 自助表单」三通道 Agent 方案，借助 Codex 生成可交互原型，与研发及内部产品团队完成评审对齐并交付上线——卖家通过 AI 访谈、自助表单或语音通话三种方式，3 分钟说清需求、自动生成结构化需求表，FDE 在后台审批确认即可。上线后预计需求采集效率提升 10 倍以上，FDE 从「访谈+填表」转变为「后台审批+搭建工作流」。</p>
-        <h3>核心工作</h3>
-        <ul>
-            <li><strong>用户调研 · 痛点量化</strong>：亲历 FDE 人工采集全流程，1 对 1 深度访谈跨境卖家、梳理 37 条一手需求（广告投流、获客、选品上架、Listing优化、达人建联、生图、视频、合规检测 8 大场景），量化三大瓶颈——单次访谈 30 分钟至 1 天、表单整理 15 分钟、日跟进上限仅 4 家、FDE 填写标准不统一</li>
-            <li><strong>产品功能设计</strong>：设计三种需求提交方式——AI 访谈助手以自然语言问答逐步引导卖家梳理选品、上架、图片、广告等业务需求，自动生成结构化需求表；卖家也可直接填写表单或语音通话描述需求，提交后 FDE 在后台审批确认，全程 3 分钟说清需求</li>
-            <li><strong>Agent 技术方案</strong>：接入大模型驱动 Agent 实现智能访谈与需求结构化——将卖家口语化描述自动提炼为标准需求字段（场景、优先级、工作流拆解等），统一数据录入标准；语音通话通道由 AI 对话完成采集，替代人工 1 对 1 访谈</li>
-            <li><strong>原型 · PRD · 交付上线</strong>：独立完成产品方案设计，Figma 输出高保真交互原型，借助 Codex 生成可交互原型加速验证；撰写 PRD 明确功能逻辑与边界，与研发及内部产品团队完成评审对齐，产品已内测上线</li>
-            <li><strong>预期成果</strong>：正式上线后需求采集效率提升 10 倍以上，FDE 无需一对一访谈填表，只需后台审批需求、搭建工作流，形成「洞察—设计—验证—再洞察」闭环</li>
-        </ul>
     </div>
 
-    <!-- 实习项目2：研学业务 AI 智能体矩阵（共创） -->
-    <div class="project">
-        <div class="project-header">
-            <h2><span class="dot"></span>AI Agent 矩阵</h2>
-            <span class="badge badge-intern">实习 · 项目</span>
+    <nav id="nav">
+        <div class="nav-inner">
+            <div class="logo">曹雨柔</div>
+            <ul class="nav-links">
+                <li><a href="#about">关于</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#skills">能力</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="切换主题">🌙</button>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+            </div>
         </div>
-        <div class="project-meta">杭州共创引导技术有限公司 · AI产品经理</div>
-        <div class="tags">
-            <span class="tag">工作流编排</span><span class="tag">Coze</span><span class="tag">Prompt工程</span>
-            <span class="tag">阿里云数据库</span><span class="tag">业务调研</span>
-        </div>
-        <p class="desc">作为产品负责人，从 0 到 1 主导财务、线路、师资 3 个 AI Agent 的落地：深入财务、运营、教务三条业务线调研并输出需求分析文档，独立完成 3 个 Agent 的架构设计、搭建、测试与上线，撰写操作手册并培训业务团队，基于反馈推动 5 项功能优化，形成完整迭代闭环。<br><span style="display:inline-block;text-indent:2em">成果：财务单据处理效率提升 67%（1 小时 → 20 分钟）、线路方案单次节省 3 小时以上、师资调度从人工翻表变为覆盖 361 位老师的秒级语义匹配。</span></p>
-        <h3>核心工作</h3>
-        <ul>
-            <li><strong>需求调研 · 能力定义</strong>：深入财务、运营、教务三条业务线，梳理报销、线路、师资的高频人工场景，输出需求分析文档，明确 3 个 Agent 的能力边界与输入输出规范</li>
-            <li><strong>财务管理 Agent</strong>：设计 9 大成本模块（开发/交付/差旅/住宿/餐食/场地/物料保险/摄影/宣发）预算模板并独立交付——预算与实际双列对比、差额与完成率自动计算、导出 Excel 保留公式、自动生成 Excel 报价单；针对 .xlsx 存取易产生模型幻觉及安全的问题，主导将存储方案从Coze沙箱改为数据库操作，协同 2 人开发团队完成 Coze 与阿里云数据库对接——单据处理 1 小时 → 20 分钟，效率提升 67%</li>
-            <li><strong>线路规划 Agent</strong>：设计「需求反问 → 联网搜方案 → 生成行程表 → 保存回顾 → 推文生成」五步工作流并独立交付——反问收集 7 项需求信息，联网推荐 2-3 个含接待/预约/信息来源的备选方案，行程表含开营结营、每日实操与食宿安排，PostgreSQL 持久化保存支持随时修改；推文生成内置 6 条研学合规红线审查——单次方案生成节省 3 小时以上</li>
-            <li><strong>师资管理 Agent</strong>：设计智能推荐、详情查询、历史记录三类场景并独立交付——自然语言提取领域/城市/标签等匹配条件，从 361 位老师的结构化师资库（含擅长标签、可担任类型、协议状态等字段）语义检索，输出主推 1 位 + 备选 3 位的完整信息表与匹配理由，交互记录持久化存储——师资调度从人工翻表变为秒级匹配</li>
-            <li><strong>交付 · 培训 · 迭代</strong>：独立完成 3 个 Agent 的搭建、测试、上线全流程，撰写操作手册并培训业务团队；输出体验反馈报告，基于四大类问题推动 5 项功能优化——路线专属海报提示词库、每日行程预告旁白、行程插图自动匹配、推文标准化板块（服务保障/退费政策/核心目标/核心特点）、HTML 一键输出适配公众号排版</li>
-        </ul>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about">关于</a>
+        <a href="#projects">项目</a>
+        <a href="#skills">能力</a>
+        <a href="#contact">联系</a>
     </div>
 
-    <div class="section-head">
-        <div class="section-kicker">PERSONAL PROJECTS</div>
-        <div class="section-title">个人项目</div>
+    <main>
+        <section class="hero">
+            <div class="hero-name-row">
+                <span class="hero-name">曹雨柔</span>
+                <div class="hero-avatar">
+                    <img src="avatar.jpg" alt="头像" onerror="this.style.display='none';this.parentElement.style.display='none';">
+                </div>
+            </div>
+            <div class="hero-eyebrow">AI 产品经理</div>
+            <h1>用 <em>Agent 与工作流</em><br>让产品业务变简单。</h1>
+            <p class="hero-desc">
+                两段 AI 产品经理实习经历，主导过跨境电商 Agent 工作流平台与研学业务 AI 智能体矩阵的落地；
+                个人项目中熟练使用 Claude Code、Coze、Dify 等 AI 工程化工具，擅长把一线调研转化为可上线的产品方案。
+            </p>
+            <a href="#projects" class="hero-cta">查看项目案例 →</a>
+            <div class="scroll-hint">
+                <span>向下滚动</span>
+                <span>↓</span>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="section-label reveal">About</div>
+            <div class="about-grid reveal">
+                <div class="about-text">
+                    <h2>从调研到产品，<br>关注真实业务效果。</h2>
+                    <p>
+                        我习惯先深入业务一线，通过访谈和观察把零散痛点沉淀为标准化流程；
+                        再用 AI Agent、工作流编排和原型设计，把这些流程变成可落地、可量化的产品。
+                    </p>
+                    <p>
+                        在江苏灵匠参与魔方AI V0.4→V0.6 迭代，负责 FDE 需求采集产品上线全流程及魔方AI 选品能力建设；
+                        在共创引导主导财务、线路、师资 3 个 Agent 的 0-1 落地。个人项目覆盖 Claude Code Skill、浏览器扩展、
+                        Coze、Dify 工作流等方向，持续关注 AI 产品如何真正跑在业务里。
+                    </p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat">
+                        <div class="stat-value">10x</div>
+                        <div class="stat-label">需求采集效率提升</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">67%</div>
+                        <div class="stat-label">单据处理耗时降低</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">3+</div>
+                        <div class="stat-label">AI Agent 落地</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">8+</div>
+                        <div class="stat-label">产品/工具项目</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="section-label reveal">Selected Projects</div>
+            <p class="projects-note reveal">🔒 注：实习项目涉及公司内部机密，不做产品成品展示</p>
+            <div class="filter-tabs reveal" id="filterTabs">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="intern">实习项目</button>
+                <button class="filter-btn" data-filter="personal">个人项目</button>
+                <button class="filter-btn" data-filter="course">课程项目</button>
+            </div>
+            <div class="projects-list">
+                <!-- 实习项目1 -->
+                <article class="project-card reveal" data-category="intern">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">魔方AI · Agent工作流自动化平台</h3>
+                            <div class="project-meta">江苏灵匠信息科技有限公司 · AI产品经理 · 2026.07-2026.10</div>
+                        </div>
+                        <span class="project-tag">实习项目</span>
+                    </div>
+                    <p class="project-desc">
+                        参与面向跨境电商从业者的 Agent 工作流自动化平台「魔方AI」的 V0.4→V0.6 迭代。
+                        V0.4 负责面向 FDE 实施团队的需求采集产品 0-1；V0.5 与 V0.6 转向平台内的选品能力建设，
+                        完成选品页原型搭建、TikTok Shop 等相关选品节点 PRD 与多平台数据接入方案。
+                    </p>
+                    <div class="project-highlights">
+                        <span class="highlight">需求采集效率提升 10 倍</span>
+                        <span class="highlight">选品页原型搭建</span>
+                        <span class="highlight">竞品调研 10 份+</span>
+                        <span class="highlight">FastMoss / 1688 / 亚马逊 / TikTok 接入</span>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心工作</h4>
+                        <ul>
+                            <li><strong>V0.4 · FDE 需求采集产品 0-1</strong>：通过抖音、微信社群触达跨境卖家并开展一对一访谈，梳理广告投流、选品上架、Listing 优化、达人建联等高频场景；独立完成 Figma 高保真原型与 PRD，融合「AI 电话 + 在线对话 + 自助表单」3 种采集通道，让卖家 3 分钟说清需求并自动生成结构化需求表。</li>
+                            <li><strong>V0.5 · 选品页原型搭建与整合</strong>：负责选品页 0-1 设计，使用 Figma 人工绘制并借助 Codex 输出可交互原型；作为选品页面负责人，与其他模块负责人合并完成魔方 AI 整体原型。</li>
+                            <li><strong>V0.6 · 工作流选品节点</strong>：独立输出 TikTok Shop 等相关选品节点 PRD，定义「品类洞察 → 数据筛选 → 需求验证」3 步链路；规划 FastMoss、1688、亚马逊、TikTok 等多平台选品数据接入。</li>
+                            <li><strong>竞品调研与选品能力建设</strong>：对 Linkfok 开展选品专项调研，跑通其选品流程与 MCP 能力，输出 10 份以上选品调研与能力文档，识别跨平台选品数据、多平台店铺上架、1688 供应链比价与利润核算、POD 4 类能力缺口。</li>
+                            <li><strong>版本评审与跨团队迭代</strong>：参与版本评审会讲解 PRD 并跑通原型，根据评审意见修订原型与展现方式，结合内测反馈持续迭代。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 实习项目2 -->
+                <article class="project-card reveal" data-category="intern">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">AI Agent 矩阵</h3>
+                            <div class="project-meta">杭州共创引导技术有限公司 · AI产品经理 · 2026.03-2026.06</div>
+                        </div>
+                        <span class="project-tag">实习项目</span>
+                    </div>
+                    <p class="project-desc">
+                        作为产品负责人，从 0 到 1 主导财务、线路、师资 3 个 AI Agent 的落地：
+                        深入财务、运营、教务三条业务线调研并输出需求分析文档，独立完成 3 个 Agent 的架构设计、搭建、测试与上线，
+                        撰写操作手册并培训业务团队，基于反馈推动 5 项功能优化。
+                    </p>
+                    <div class="project-highlights">
+                        <span class="highlight">单据处理效率提升 67%（1h→20min）</span>
+                        <span class="highlight">线路方案单次节省 3h+</span>
+                        <span class="highlight">361 位老师秒级语义匹配</span>
+                        <span class="highlight">Coze + 阿里云数据库</span>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心工作</h4>
+                        <ul>
+                            <li><strong>需求调研 · 能力定义</strong>：深入财务、运营、教务三条业务线，梳理报销、线路、师资的高频人工场景，输出需求分析文档，明确 3 个 Agent 的能力边界与输入输出规范。</li>
+                            <li><strong>财务管理 Agent</strong>：设计 9 大成本模块预算模板，实现预算与实际双列对比、差额与完成率自动计算；主导将存储方案从 Coze 沙箱改为阿里云数据库操作，单据处理从 1 小时降至 20 分钟。</li>
+                            <li><strong>线路规划 Agent</strong>：设计「需求反问 → 联网搜方案 → 生成行程表 → 保存回顾 → 推文生成」五步工作流，内置 6 条研学合规红线审查，单次方案生成节省 3 小时以上。</li>
+                            <li><strong>师资管理 Agent</strong>：从 361 位老师的结构化师资库语义检索，输出主推 1 位 + 备选 3 位的完整信息表与匹配理由，师资调度从人工翻表变为秒级匹配。</li>
+                            <li><strong>交付 · 培训 · 迭代</strong>：独立完成 3 个 Agent 的搭建、测试、上线全流程，撰写操作手册并培训业务团队；基于反馈推动 5 项功能优化。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 个人项目1 -->
+                <article class="project-card reveal" data-category="personal">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">CC-Switcher · 多模型提供商管理 Skill</h3>
+                            <div class="project-meta">个人项目 · Claude Code Skill</div>
+                        </div>
+                        <span class="project-tag">个人项目</span>
+                    </div>
+                    <p class="project-desc">
+                        针对 Claude Code 用户接入 DeepSeek、通义千问、MiniMax、Kimi 等第三方 LLM 时配置链路长、跨平台差异大、模型更新易滞后的问题，
+                        设计并开发了一套多模型提供商管理 Skill。将多步手动配置收敛为一条自然语言指令，实现「模型调研 → 档位匹配 → 配置生成 → 注入全局设置」全链路接入。
+                    </p>
+                    <div class="project-highlights">
+                        <span class="highlight">接入时长从 10min+ 收敛到 1 句话</span>
+                        <span class="highlight">提供商切换 1 秒内生效</span>
+                        <span class="highlight">跨平台适配 Windows/macOS/Linux</span>
+                        <span class="highlight">GitHub 开源</span>
+                    </div>
+                    <div class="media-grid">
+                        <div class="media-card" data-src="demo-1.mp4" data-type="video">
+                            <span class="label">演示视频（请先点击播放再点击全屏）</span>
+                        </div>
+                        <div class="media-card" data-src="cc-switcher-menu.png" data-type="image">
+                            <span class="label">提供商配置成功示例 · 点击放大</span>
+                        </div>
+                    </div>
+                    <a class="project-btn" href="https://github.com/820312/cc-switcher" target="_blank">🔗 查看 GitHub 仓库</a>
+                    <div class="project-details">
+                        <h4>核心工作</h4>
+                        <ul>
+                            <li><strong>意图识别 · 交互收敛</strong>：将建目录、改 JSON、配环境变量、写启动脚本、设别名等多步流程收敛为自然语言单轮指令，自动路由到首次配置 / 新增 / 删除 / 更新模型工作流。</li>
+                            <li><strong>Agent 编排 · 模型匹配</strong>：驱动 Agent 联网抓取官方文档，按 Opus / Sonnet / Haiku 三档自动映射到各提供商的旗舰 / 主力 / 轻量模型 ID。</li>
+                            <li><strong>跨平台适配</strong>：自动检测平台，生成 launch.sh / launch.ps1 与路径定义；macOS 自动安装 fzf、jq 并注入 shell 别名 cc。</li>
+                            <li><strong>配置生成与注入</strong>：统一 provider JSON 格式，启动脚本动态扫描 providers 目录，实现多提供商并存与即时切换。</li>
+                            <li><strong>持续迭代 · 容错</strong>：新增基于 docs_url 的模型自动更新工作流，持续优化 Skill 描述文本与触发规则，提升命中率与可用性。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 个人项目2 -->
+                <article class="project-card reveal" data-category="personal">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">剪藏助手</h3>
+                            <div class="project-meta">个人项目 · Edge 扩展</div>
+                        </div>
+                        <span class="project-tag">个人项目</span>
+                    </div>
+                    <p class="project-desc">
+                        一款直接运行在浏览器中的智能剪藏工具。用户在网页中选中文字并右击，即可调用 DeepSeek 自动提取摘要与标签，
+                        分类存入云端。支持查看、筛选、分类、删除及标签管理，存入内容同步记录网页地址，点击 URL 即可回到原文页面。
+                    </p>
+                    <div class="project-highlights">
+                        <span class="highlight">Edge 右键菜单集成</span>
+                        <span class="highlight">API调用</span>
+                        <span class="highlight">JSONBin 云端存储</span>
+                        <span class="highlight">三层结构化 Prompt</span>
+                    </div>
+                    <div class="media-grid">
+                        <div class="media-card" data-src="demo-2.mp4" data-type="video">
+                            <span class="label">演示视频（请先点击播放再点击全屏）</span>
+                        </div>
+                        <div class="media-card" data-src="screenshot1.jpg" data-type="image">
+                            <span class="label">表格视图 · 点击放大</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心工作</h4>
+                        <ul>
+                            <li><strong>插件交互框架</strong>：通过 Claude Code 搭建代码骨架、Edge 右键菜单与后台调度，Chrome 通知 API 实现操作反馈。</li>
+                            <li><strong>Prompt 设计</strong>：三层结构化 Prompt 约束 DeepSeek 输出 JSON Schema，正则剥离 Markdown 包裹。</li>
+                            <li><strong>上下文增强</strong>：抓取页面标题与选中正文嵌入 Prompt，自动生成标签与重点摘要，贴合原文语义。</li>
+                            <li><strong>API 链路</strong>：用 DeepSeek 与 JSONBin.io 的 API 联调并配置 token 缓存，确保每次调用稳定可靠。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 个人项目3 -->
+                <article class="project-card reveal" data-category="personal">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">客户反馈智能处理 Agent</h3>
+                            <div class="project-meta">个人项目 · Coze 工作流</div>
+                        </div>
+                        <span class="project-tag">个人项目</span>
+                    </div>
+                    <p class="project-desc">
+                        针对客服团队人工处理用户反馈「分类耗时长、信息散落、响应不及时」的痛点，搭建智能反馈处理 Agent。
+                        通过对客户反馈进行意图与情感分析，自动区分好评、建议与 Bug，并按紧急度分流写入飞书多维表格，实现从反馈输入到自动分流的闭环。
+                    </p>
+                    <div class="project-highlights">
+                        <span class="highlight">意图 + 情感双维分析</span>
+                        <span class="highlight">Bug 紧急度分级</span>
+                        <span class="highlight">飞书多维表格自动写入</span>
+                        <span class="highlight">差异化自动回复</span>
+                    </div>
+                    <div class="media-grid">
+                        <div class="media-card" data-src="demo-3.mp4" data-type="video">
+                            <span class="label">对话演示（请先点击播放再点击全屏）</span>
+                        </div>
+                        <div class="media-card" data-src="screenshot2.png" data-type="image">
+                            <span class="label">工作流画布 · 点击放大</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心工作</h4>
+                        <ul>
+                            <li><strong>架构设计</strong>：四步工作流 + 三层 IF 选择器，自动区分好评、建议、紧急 Bug、普通 Bug。</li>
+                            <li><strong>Prompt 工程</strong>：七个节点结构化 Prompt，约束输出格式，保障节点间数据传递可靠。</li>
+                            <li><strong>飞书 API 集成</strong>：紧急 Bug 与普通 Bug 分别写入不同表格，建议存入评估知识库。</li>
+                            <li><strong>情感自适应回复</strong>：定制差异化回复路径，负面融入安抚，好评生成个性化感谢。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 个人项目4 -->
+                <article class="project-card reveal" data-category="personal">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">竞品功能对比分析器</h3>
+                            <div class="project-meta">个人项目 · 全栈开发</div>
+                        </div>
+                        <span class="project-tag">个人项目</span>
+                    </div>
+                    <p class="project-desc">
+                        基于 Claude Code 全栈搭建的 AI 竞品分析工具。输入两个产品的功能描述，调用 DeepSeek 自动生成结构化 Markdown 对比表格。
+                        后端采用 Python Flask，前端原生 HTML/CSS，Prompt 独立抽离为模板模块，temperature 设为 0.1 确保输出稳定。
+                    </p>
+                    <div class="project-highlights">
+                        <span class="highlight">Flask + DeepSeek API</span>
+                        <span class="highlight">Markdown 对比表格</span>
+                        <span class="highlight">Prompt + 代码双层容错</span>
+                        <span class="highlight">GitHub 开源</span>
+                    </div>
+                    <div class="media-grid">
+                        <div class="media-card" data-src="input2.png" data-type="image">
+                            <span class="label">输入界面 · 点击放大</span>
+                        </div>
+                        <div class="media-card" data-src="output2.jpg" data-type="image">
+                            <span class="label">对比结果 · 点击放大</span>
+                        </div>
+                    </div>
+                    <a class="project-btn" href="https://github.com/820312/ai-competitor-analyzer" target="_blank">🔗 查看 GitHub 仓库</a>
+                    <div class="project-details">
+                        <h4>核心工作</h4>
+                        <ul>
+                            <li><strong>全栈搭建</strong>：通过 Claude Code 生成 Flask 骨架、前端页面、Prompt 模块，独立完成产品决策与功能定义。</li>
+                            <li><strong>Prompt 设计</strong>：约束输出为 Markdown 表格（功能维度 / A 表现 / B 表现 / 差异类型），差异类型限定四类减少自由发挥。</li>
+                            <li><strong>容错机制</strong>：Prompt 为软约束，代码层正则剥离为硬兜底，复用剪藏助手的容错经验。</li>
+                            <li><strong>前后端校验</strong>：前端 required + JS 双重校验，后端非空判断兜底，统一错误信息为用户可读中文提示。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 个人项目5 -->
+                <article class="project-card reveal" data-category="personal">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">智析文档对比系统</h3>
+                            <div class="project-meta">个人项目 · Dify 工作流</div>
+                        </div>
+                        <span class="project-tag">个人项目</span>
+                    </div>
+                    <p class="project-desc">
+                        针对产品经理在多版本文档（PRD、合同、技术方案）对比中人工逐行比对效率低、易遗漏的痛点，基于 Dify 搭建智能对比工作流。
+                        支持上传两份 PDF/Word/txt/jpg 等文档，自动提取文本并调用 DeepSeek 分析差异，输出结构化 Markdown 表格，并支持定向问答。
+                    </p>
+                    <div class="project-highlights">
+                        <span class="highlight">对比响应 < 10 秒</span>
+                        <span class="highlight">输出可用率 95%+</span>
+                        <span class="highlight">定向问答避免信息过载</span>
+                        <span class="highlight">支持多种文档格式</span>
+                    </div>
+                    <div class="media-grid media-3">
+                        <div class="media-card media-3-item" data-src="doc-compare-1.png" data-type="image">
+                            <span class="label">工作流画布 · 点击放大</span>
+                        </div>
+                        <div class="media-card media-3-item" data-src="doc-compare-2.png" data-type="image">
+                            <span class="label">对比结果表格 · 点击放大</span>
+                        </div>
+                        <div class="media-card media-3-item" data-src="doc-compare-3.png" data-type="image">
+                            <span class="label">定向问答示例 · 点击放大</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心工作</h4>
+                        <ul>
+                            <li><strong>工作流编排</strong>：基于 Dify 设计开始节点 → 双文档提取器 → 条件分支 → LLM → 结束节点的完整 Pipeline，支持完整对比与定向问答两种模式自动分流。</li>
+                            <li><strong>Prompt 工程</strong>：系统提示词预设产品经理角色，约束输出为 Markdown 表格，变化类型按「新增 / 差异」规则分类。</li>
+                            <li><strong>文档处理</strong>：利用 Dify 内置文档提取器解析 doc/docx/pdf/txt，自动清洗换行与空白字符，避免无关字符干扰 LLM 输出。</li>
+                            <li><strong>产品化设计</strong>：支持用户上传文档同时输入具体问题，模型仅返回相关差异，降低认知负担；输出包含总结行，方便快速浏览。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 个人项目6 -->
+                <article class="project-card reveal" data-category="course">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">美购汇 · 社交电商平台</h3>
+                            <div class="project-meta">课程项目 · Axure RP 9</div>
+                        </div>
+                        <span class="project-tag">课程项目</span>
+                    </div>
+                    <p class="project-desc">
+                        课程小组项目，设计一个带话题社区的电商 App。我在团队中负责高保真原型制作与页面交互逻辑实现，
+                        覆盖首页、秒杀、商品详情、购物车、分类、话题、搜索等页面。
+                    </p>
+                    <div class="project-highlights">
+                        <span class="highlight">Axure RP 9 高保真原型</span>
+                        <span class="highlight">购物车全选 / 数量联动</span>
+                        <span class="highlight">秒杀状态切换</span>
+                        <span class="highlight">信息架构重组</span>
+                    </div>
+                    <div class="media-grid">
+                        <div class="media-card" data-src="demo-4.mp4" data-type="video">
+                            <span class="label">演示视频</span>
+                        </div>
+                        <div class="media-card" data-src="screenshot3.png" data-type="image">
+                            <span class="label">项目首页 · 点击放大</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>核心工作</h4>
+                        <ul>
+                            <li><strong>原型搭建</strong>：使用 Axure RP 9 制作 430×886 手机界面，覆盖首页、秒杀、商品详情、购物车、分类、话题、搜索等页面。</li>
+                            <li><strong>交互实现</strong>：实现购物车全选 / 数量联动、秒杀倒计时状态切换、未登录拦截、搜索历史记录、话题点赞计数等前端交互逻辑。</li>
+                            <li><strong>信息架构</strong>：根据团队提供的功能清单，将 30+ 信息点重组为底部 5 个导航，并画出页面跳转流程图。</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="section-label reveal">Capabilities</div>
+            <div class="skills-grid reveal">
+                <div class="skill-category">
+                    <h3>产品设计与交付</h3>
+                    <ul>
+                        <li>需求调研与用户访谈</li>
+                        <li>PRD 撰写与功能边界定义</li>
+                        <li>Figma / Axure 高保真原型</li>
+                        <li>产品评审与跨团队对齐</li>
+                        <li>竞品分析</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>AI / Agent</h3>
+                    <ul>
+                        <li>Agent 工作流编排（Coze / Dify）</li>
+                        <li>Prompt 工程与模型调优</li>
+                        <li>大模型应用场景设计</li>
+                        <li>Claude Code Skill 开发</li>
+                        <li>AI 产品效果评估</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>工程协作</h3>
+                    <ul>
+                        <li>数据库与 API 方案理解</li>
+                        <li>阿里云数据库 / PostgreSQL</li>
+                        <li>Python / Flask 全栈验证</li>
+                        <li>GitHub 与版本管理</li>
+                        <li>浏览器扩展开发</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="contact reveal">
+                <h2>一起聊聊？</h2>
+                <p>如果你对我的项目感兴趣，欢迎通过以下方式联系我。</p>
+                <div class="contact-links">
+                    <span>📧 2085131930@qq.com</span>
+                    <span>📞 13399227386</span>
+                    <span>💬 C8121Mirai</span>
+                    <a href="https://github.com/820312" target="_blank">🐙 GitHub</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <button class="back-top" id="backTop" title="回到顶部">↑</button>
+
+    <!-- 灯箱弹窗 -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content" id="lightboxContent"></div>
+        <button class="lightbox-close" id="lightboxClose">✕</button>
     </div>
 
-    <!-- 项目3：CC-Switcher · 多模型提供商管理 Skill -->
-    <div class="project">
-        <div class="project-header">
-            <h2><span class="dot"></span>CC-Switcher · 多模型提供商管理 Skill</h2>
-        </div>
-        <div class="tags">
-            <span class="tag">Claude Code Skill</span><span class="tag">Agent编排</span><span class="tag">Prompt工程</span>
-            <span class="tag">多模型接入</span><span class="tag">API集成</span><span class="tag">跨平台适配</span>
-        </div>
-        <p class="desc">针对 Claude Code 用户在接入 DeepSeek、通义千问、MiniMax、Kimi 等第三方 LLM 提供商时，配置链路长（手动编辑 JSON、配置环境变量、编写启动脚本）、跨平台差异大（Windows/macOS/Linux 路径与脚本各异）且模型版本更新后本地配置易滞后的问题，基于 Claude Code Skill 机制设计并开发了一套多模型提供商管理 Skill。将多步手动配置收敛为一条自然语言指令，用户只需一句话即可完成「模型调研 → 档位匹配 → 配置生成 → 注入全局设置」的全链路接入。Skill 内置首次配置、新增提供商、删除、模型更新四类工作流，Agent 联网抓取官方文档并按 Opus/Sonnet/Haiku 三档自动匹配模型 ID，自动适配三端平台与 shell 别名，实现多提供商并存、一键切换与模型自动更新。经实测，单个提供商接入从手动 10+ 分钟的多步操作收敛为一句自然语言指令即可完成，提供商切换 1 秒内生效，显著降低配置与维护成本。
-        </p>
-        <div class="media-grid">
-            <div class="media-card" data-src="demo-1.mp4" data-type="video">
-                <span class="label">演示视频（请先点击播放再点击全屏）</span>
-            </div>
-            <div class="media-card" data-src="cc-switcher-menu.png" data-type="image">
-                <span class="label">提供商配置成功示例 · 点击放大</span>
-            </div>
-        </div>
-        <a class="download-btn" href="https://github.com/820312/cc-switcher" target="_blank">
-            🔗 查看 GitHub 仓库
-        </a>
-        <h3>核心工作</h3>
-        <ul>
-            <li><strong>意图识别 · 交互收敛</strong>：将「建目录 → 改 JSON → 配环境变量 → 写启动脚本 → 设别名」的多步手动流程收敛为自然语言单轮指令；通过意图判断自动路由到「首次配置 / 新增提供商 / 删除 / 更新模型」对应工作流，用户一句话即可完成全链路接入</li>
-            <li><strong>Agent 编排 · 模型匹配</strong>：设计四类工作流驱动 Agent 联网抓取提供商官方文档（杜绝凭记忆猜测模型名），按 Anthropic 的 Opus / Sonnet / Haiku 三档定义，将各档位自动映射到提供商的旗舰 / 主力 / 轻量模型 ID，生成统一格式的 provider 配置</li>
-            <li><strong>跨平台适配</strong>：自动检测 macOS / Linux / Windows 平台，生成对应的启动脚本（launch.sh / launch.ps1）与路径定义；Windows 无需额外依赖，macOS 自动安装 fzf、jq，并自动注入 shell 别名 <code>cc</code>，一条命令即可启动并选择提供商</li>
-            <li><strong>配置生成与注入</strong>：统一 provider JSON 格式（顶层 <code>docs_url</code> + <code>env</code> 环境变量组），启动脚本动态扫描 providers 目录实现多提供商并存与即时切换；选择结果写入全局 settings.json，所有终端共享同一提供商</li>
-            <li><strong>持续迭代 · 容错</strong>：针对提供商模型版本更新导致本地配置滞后的问题，新增基于 <code>docs_url</code> 的模型自动更新工作流（仅更新模型字段、保留 API Key）；持续优化 Skill 描述文本与触发规则，修正实际使用中的触发偏差，提升命中率与可用性</li>
-        </ul>
-    </div>
+    <footer>
+        © 2026 曹雨柔. 保留所有权利。
+    </footer>
 
-    <!-- 项目4：剪藏助手 -->
-    <div class="project">
-        <div class="project-header">
-            <h2><span class="dot"></span>剪藏助手</h2>
-        </div>
-        <div class="tags">
-            <span class="tag">Edge扩展</span><span class="tag">LLM</span><span class="tag">Prompt工程</span>
-            <span class="tag">RAG</span><span class="tag">API调用</span><span class="tag">JSONBin</span>
-        </div>
-        <p class="desc">通过Claude Code辅助开发了一款直接运行在浏览器中的智能剪藏工具。用户在网页中选中文字并右击，即可调用DeepSeek自动提取摘要与标签，分类存入云端。支持随时查看、关键词与日期筛选、自主分类及删除、分类标签增删改。存入内容时同步记录网页地址，点击URL即可回到原文页面。
-        </p>
-        <div class="media-grid">
-            <div class="media-card" data-src="demo-2.mp4" data-type="video">
-                <span class="label">演示视频（请先点击播放再点击全屏）</span>
-            </div>
-            <div class="media-card" data-src="screenshot1.jpg" data-type="image">
-                <span class="label">表格视图 · 点击放大</span>
-            </div>
-        </div>
-        <h3>核心工作</h3>
-        <ul>
-            <li><strong>插件交互框架</strong>：通过Claude Code搭建代码骨架、Edge右键菜单与后台调度，Chrome通知API实现操作反馈</li>
-            <li><strong>Prompt设计</strong>：三层结构化Prompt约束DeepSeek输出JSON Schema，正则剥离Markdown包裹</li>
-            <li><strong>上下文增强</strong>：抓取页面标题与选中正文嵌入Prompt，自动生成标签与重点摘要，贴合原文语义</li>
-            <li><strong>API链路</strong>：用DeepSeek与JSONBin.io的API联调并配置token缓存，确保从大模型处理到云端写入的每次调用稳定可靠。</li>
-        </ul>
-    </div>
+    <script>
+        // 导航阴影 + 阅读进度 + 回到顶部
+        const nav = document.getElementById('nav');
+        const readProgress = document.getElementById('readProgress');
+        const backTop = document.getElementById('backTop');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+            const doc = document.documentElement;
+            const max = doc.scrollHeight - window.innerHeight;
+            if (max > 0) readProgress.style.width = (window.scrollY / max * 100) + '%';
+            backTop.classList.toggle('show', window.scrollY > 600);
+        }, { passive: true });
+        backTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 
-    <!-- 项目5：客户反馈智能处理Agent -->
-    <div class="project">
-        <div class="project-header">
-            <h2><span class="dot"></span>客户反馈智能处理Agent</h2>
-        </div>
-        <div class="tags">
-            <span class="tag">Agent</span><span class="tag">Coze工作流</span><span class="tag">Prompt工程</span>
-            <span class="tag">API调用</span><span class="tag">飞书多维表格</span>
-        </div>
-        <p class="desc">该项目是作为售后流程的分支，主要针对用户售后反馈搭建智能反馈处理Agent，针对客服团队人工处理用户反馈“分类耗时长、信息散落、响应不及时”的痛点，设计了该项目：通过对客户反馈进行意图、情感分析，自动区分好评、建议与Bug；其中Bug按紧急度划分为紧急Bug和普通Bug。将Bug与建议自动写入飞书多维表格，并对反馈客户做出相应回应。从而完整实现从反馈输入、自动分类、智能分流、多维度分析，到飞书多维表格自动写入的闭环流程。该项目不仅可以作为智能反馈客服，还可以节省人工收集处理建议的时间，大大提高了工作效率。</p>
-        <div class="media-grid">
-            <div class="media-card" data-src="demo-3.mp4" data-type="video">
-                <span class="label">对话演示（请先点击播放再点击全屏）</span>
-            </div>
-            <div class="media-card" data-src="screenshot2.png" data-type="image">
-                <span class="label">工作流画布 · 点击放大</span>
-            </div>
-        </div>
-        <h3>核心工作</h3>
-        <ul>
-            <li><strong>架构设计</strong>：四步工作流+三层IF选择器，Bug、建议、好评三种类型及Bug紧急度双重路线</li>
-            <li><strong>Prompt工程</strong>：七个节点结构化Prompt，约束输出格式保障节点间数据传递可靠</li>
-            <li><strong>飞书API集成</strong>：紧急Bug与普通Bug分别写入不同表格，建议存入评估知识库</li>
-            <li><strong>情感自适应回复</strong>：定制差异化回复路径，负面融入安抚，好评生成个性化感谢</li>
-        </ul>
-    </div>
+        // 全局提示条：首次打开时显示，6 秒后自动消失
+        function showTip() {
+            const tip = document.getElementById('globalTip');
+            if (!tip) return;
+            tip.classList.add('show');
+            setTimeout(() => {
+                tip.classList.remove('show');
+            }, 6000);
+        }
+        function closeTip() {
+            const tip = document.getElementById('globalTip');
+            if (tip) tip.classList.remove('show');
+        }
+        window.addEventListener('DOMContentLoaded', showTip);
+        document.getElementById('tipClose').addEventListener('click', closeTip);
 
-    <!-- 项目6：竞品功能对比分析器 -->
-    <div class="project">
-        <div class="project-header">
-            <h2><span class="dot"></span>竞品功能对比分析器</h2>
-        </div>
-        <div class="tags">
-            <span class="tag">Claude Code</span><span class="tag">Flask</span><span class="tag">DeepSeek API</span>
-            <span class="tag">Prompt工程</span><span class="tag">竞品分析</span><span class="tag">全栈开发</span>
-        </div>
-        <p class="desc">基于 Claude Code 全栈搭建的 AI 竞品分析工具。输入两个产品的功能描述，调用 DeepSeek 自动生成结构化 Markdown 对比表格（功能维度、差异类型、核心优劣总结）。后端采用 Python Flask，前端原生 HTML/CSS，Prompt 独立抽离为模板模块，temperature 设为 0.1 确保输出稳定。针对模型偶发返回代码块包裹 Markdown 的问题，在代码层增加正则剥离容错处理，避免过度依赖 Prompt 约束。完整记录 <a href="https://github.com/820312/ai-competitor-analyzer" target="_blank">AI 协作过程</a>与排错日志，展示从产品决策到代码实现到异常处理的完整链路。</p>
-        <div class="media-grid">
-            <div class="media-card" data-src="input2.png" data-type="image">
-                <span class="label">输入界面 · 点击放大</span>
-            </div>
-            <div class="media-card" data-src="output2.jpg" data-type="image">
-                <span class="label">对比结果 · 点击放大</span>
-            </div>
-        </div>
-        <a class="download-btn" href="https://github.com/820312/ai-competitor-analyzer" target="_blank">
-            🔗 查看 GitHub 仓库
-        </a>
-        <h3>核心工作</h3>
-        <ul>
-            <li><strong>全栈搭建</strong>：通过 Claude Code 生成 Flask 骨架、前端页面、Prompt 模块，独立完成产品决策与功能定义</li>
-            <li><strong>Prompt 设计</strong>：约束输出为 Markdown 表格（功能维度/A表现/B表现/差异类型），差异类型限定四类减少自由发挥</li>
-            <li><strong>容错机制</strong>：Prompt 为软约束，代码层正则剥离为硬兜底——跨项目复用剪藏助手的容错经验</li>
-            <li><strong>前后端校验</strong>：前端 required + JS 双重校验，后端非空判断兜底，统一错误信息为用户可读的中文提示</li>
-        </ul>
-    </div>
+        // 主题切换（记忆用户偏好）
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' ||
+            (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+        function syncThemeIcon() {
+            themeToggle.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+        }
+        syncThemeIcon();
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme',
+                document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            syncThemeIcon();
+        });
 
-    <!-- 项目7：智析文档对比系统 -->
-    <div class="project">
-        <div class="project-header">
-            <h2><span class="dot"></span>智析文档对比系统</h2>
-        </div>
-        <div class="tags">
-            <span class="tag">Dify工作流</span><span class="tag">DeepSeek API</span><span class="tag">Prompt工程</span>
-            <span class="tag">文档提取</span><span class="tag">Markdown输出</span>
-        </div>
-        <p class="desc">针对产品经理在多版本文档（PRD、合同、技术方案）对比中人工逐行比对效率低、易遗漏的痛点，基于 Dify 搭建智能对比工作流。支持上传两份 PDF/Word/txt/jpg等类型文档，自动提取文本并调用 DeepSeek 模型分析功能、技术约束、发布计划等维度的差异，输出结构化 Markdown 表格。创新性加入定向问答能力：用户上传文档时可附带具体问题（如”技术约束有哪些变化”），模型仅返回相关差异，避免信息过载。全流程模块化编排，典型对比任务响应时间 <10 秒，输出可用率从 70% 提升至 95% 以上。</p>
-        <div class="media-grid media-3">
-            <div class="media-card media-3-item" data-src="doc-compare-1.png" data-type="image">
-                <span class="label">工作流画布 · 点击放大</span>
-            </div>
-            <div class="media-card media-3-item" data-src="doc-compare-2.png" data-type="image">
-                <span class="label">对比结果表格 · 点击放大</span>
-            </div>
-            <div class="media-card media-3-item" data-src="doc-compare-3.png" data-type="image">
-                <span class="label">定向问答示例 · 点击放大</span>
-            </div>
-        </div>
-        <h3>核心工作</h3>
-        <ul>
-            <li><strong>工作流编排</strong>：基于 Dify 设计开始节点 → 双文档提取器 → 条件分支 → LLM → 结束节点的完整 Pipeline，支持完整对比与定向问答两种模式自动分流</li>
-            <li><strong>Prompt 工程</strong>：系统提示词预设产品经理角色，约束输出为 Markdown 表格（项目/内容/变化类型），变化类型按“新增/差异”规则分类；通过 Jinja 模板将用户问题与文档内容拼接，实现单轮针对性回答</li>
-            <li><strong>文档处理</strong>：利用 Dify 内置文档提取器解析 doc/docx/pdf/txt，自动清洗换行与空白字符，避免无关字符干扰 LLM 输出</li>
-            <li><strong>产品化设计</strong>：支持用户上传文档同时输入问题（如“新增了哪些功能”），系统自动判断并只输出相关差异，降低认知负担；输出包含总结行，方便快速浏览</li>
-        </ul>
-    </div>
+        // 移动端菜单
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        mobileMenu.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        });
 
-    <!-- 项目8：美购汇 · 社交电商平台 -->
-    <div class="project">
-        <div class="project-header">
-            <h2><span class="dot"></span>美购汇 · 社交电商平台</h2>
-        </div>
-        <div class="tags">
-            <span class="tag">Axure RP 9</span><span class="tag">交互设计</span><span class="tag">原型设计</span>
-            <span class="tag">电商设计</span><span class="tag">信息架构</span>
-        </div>
-        <p class="desc">课程小组项目，设计一个带话题社区的电商App。我在团队中负责高保真原型制作、页面交互逻辑实现。团队前期已完成竞品分析和用户需求调研，重点实现购物车全选、数量联动、秒杀状态切换、未登录拦截等交互，并输出功能列表、边界条件及页面跳转说明。</p>
-        <div class="media-grid">
-            <div class="media-card" data-src="demo-4.mp4" data-type="video">
-                <span class="label">演示视频</span>
-            </div>
-            <div class="media-card" data-src="screenshot3.png" data-type="image">
-                <span class="label">项目首页 · 点击放大</span>
-            </div>
-        </div>
-        <h3>核心工作</h3>
-        <ul>
-            <li><strong>原型搭建</strong>：使用Axure RP 9制作430*886手机界面，覆盖首页、秒杀、商品详情、购物车、分类、话题、搜索等页面</li>
-            <li><strong>交互实现</strong>：实现了购物车全选/数量联动、秒杀倒计时状态切换、未登录拦截、搜索历史记录、话题点赞计数等前端交互逻辑</li>
-            <li><strong>信息架构</strong>：根据团队提供的功能清单，将30+信息点重组为底部5个导航（首页、分类、专题、评价、我的），并画出页面跳转流程图</li>
-        </ul>
-    </div>
+        // 滚动入场动画
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(en => {
+                if (en.isIntersecting) {
+                    en.target.classList.add('visible');
+                    revealObserver.unobserve(en.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-</main>
+        // 项目筛选
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                projectCards.forEach(card => {
+                    const show = filter === 'all' || card.dataset.category === filter;
+                    card.classList.toggle('hidden', !show);
+                    if (show) {
+                        card.classList.add('visible');
+                    }
+                });
+            });
+        });
 
-<!-- 全屏弹窗 -->
-<div class="modal" id="mediaModal" onclick="closeMedia(event)">
-    <div class="modal-content" id="modalContent"></div>
-    <button class="modal-close" onclick="closeMedia(event)">✕</button>
-</div>
+        // 导航高亮当前区域
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(en => {
+                if (en.isIntersecting) {
+                    const id = en.target.id;
+                    navLinks.forEach(l => {
+                        l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+                    });
+                }
+            });
+        }, { rootMargin: '-40% 0px -55% 0px' });
+        ['about', 'projects', 'skills', 'contact'].forEach(id => {
+            const sec = document.getElementById(id);
+            if (sec) sectionObserver.observe(sec);
+        });
 
-<script>
-    // 页面加载时自动渲染所有媒体卡片
-    function makePlaceholder(icon) {
-        const placeholder = document.createElement('span');
-        placeholder.className = 'placeholder-icon';
-        placeholder.textContent = icon;
-        return placeholder;
-    }
-    function initMediaCards() {
-        const cards = document.querySelectorAll('.media-card');
-        cards.forEach(card => {
+        /* ========== 媒体卡片 + 灯箱 ========== */
+        const lightbox = document.getElementById('lightbox');
+        const lightboxContent = document.getElementById('lightboxContent');
+
+        function openLightbox(src, type) {
+            if (type === 'image') {
+                lightboxContent.innerHTML = `<img src="${src}" alt="作品截图">`;
+            } else {
+                lightboxContent.innerHTML = `<video src="${src}" controls autoplay></video>`;
+            }
+            lightbox.classList.add('active');
+        }
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            lightboxContent.innerHTML = '';
+        }
+        document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // 初始化媒体卡片：插入预览，绑定灯箱点击
+        document.querySelectorAll('.media-card').forEach(card => {
             const src = card.getAttribute('data-src');
             const type = card.getAttribute('data-type');
             if (!src) return;
 
-            // 创建预览区域
             const preview = document.createElement('div');
             preview.className = 'media-preview';
 
@@ -836,15 +1458,12 @@
                 img.src = src;
                 img.alt = '作品截图';
                 img.loading = 'lazy';
-                // 缩略图点击放大
-                img.style.cursor = 'pointer';
-                img.addEventListener('click', function(e) {
+                img.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    openMedia(e, src, 'image');
+                    openLightbox(src, 'image');
                 });
-                // 文件暂缺时显示占位图标，避免破图
-                img.addEventListener('error', function() {
-                    preview.replaceChildren(makePlaceholder('📷'));
+                img.addEventListener('error', () => {
+                    preview.innerHTML = '<span style="font-size:36px;opacity:0.4">📷</span>';
                 });
                 preview.appendChild(img);
             } else if (type === 'video') {
@@ -852,245 +1471,18 @@
                 video.src = src;
                 video.controls = true;
                 video.preload = 'metadata';
-                video.style.cursor = 'default';
-                // 点击视频弹出全屏查看
-                video.addEventListener('click', function(e) {
+                video.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    openMedia(e, src, 'video');
+                    openLightbox(src, 'video');
                 });
-                // 文件暂缺时显示占位图标，避免黑屏
-                video.addEventListener('error', function() {
-                    preview.replaceChildren(makePlaceholder('🎬'));
+                video.addEventListener('error', () => {
+                    preview.innerHTML = '<span style="font-size:36px;opacity:0.4">🎬</span>';
                 });
                 preview.appendChild(video);
-            } else {
-                // 没有有效类型，显示占位图标
-                preview.appendChild(makePlaceholder('📷'));
             }
 
-            // 把预览区域插入到卡片最前面
             card.insertBefore(preview, card.firstChild);
         });
-    }
-    function showTip() {
-        const tip = document.getElementById('globalTip');
-        if (!tip) return;
-        tip.classList.add('show');
-        setTimeout(() => {
-            tip.classList.remove('show');
-        }, 6000);
-    }
-    function closeTip() {
-        const tip = document.getElementById('globalTip');
-        if (tip) tip.classList.remove('show');
-    }
-    window.addEventListener('DOMContentLoaded', showTip);
-    // 点击缩略图或视频，弹出全屏查看
-    function openMedia(event, src, type) {
-        event.stopPropagation();
-        const modal = document.getElementById('mediaModal');
-        const content = document.getElementById('modalContent');
-        if (type === 'image') {
-            content.innerHTML = `<img src="${src}" alt="作品截图">`;
-        } else if (type === 'video') {
-            content.innerHTML = `<video src="${src}" controls autoplay></video>`;
-        }
-        modal.classList.add('active');
-    }
-    function hideMedia() {
-        document.getElementById('mediaModal').classList.remove('active');
-        document.getElementById('modalContent').innerHTML = '';
-    }
-    function closeMedia(event) {
-        if (event.target.id === 'mediaModal' || event.target.classList.contains('modal-close')) hideMedia();
-    }
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') hideMedia();
-    });
-
-    // 页面加载完后初始化
-    window.addEventListener('DOMContentLoaded', initMediaCards);
-
-    /* ========== 飞行穿梭效果 ========== */
-    // 三层星空：远景慢、近景快，滚动时产生向后飞掠的视差
-    const starLayers = [
-        { id: 'stars-far', speed: 0.05, count: 150, min: 0.5, max: 1, colors: [[226,232,244],[148,163,184]], alpha: 0.7 },
-        { id: 'stars-mid', speed: 0.11, count: 90, min: 1, max: 1.8, colors: [[186,230,253],[203,213,225]], alpha: 0.85 },
-        { id: 'stars-near', speed: 0.2, count: 40, min: 1.6, max: 2.6, colors: [[125,211,252],[196,181,253],[224,242,254]], alpha: 0.95 }
-    ];
-    function makeStars(layer) {
-        const el = document.getElementById(layer.id);
-        if (!el) return;
-        const shadows = [];
-        for (let i = 0; i < layer.count; i++) {
-            const x = (Math.random() * 100).toFixed(2);
-            const y = (Math.random() * 300).toFixed(2);   // 纵向铺满 300vh，避免滚到底星空跑空
-            const s = (Math.random() * (layer.max - layer.min) + layer.min).toFixed(2);
-            const c = layer.colors[(Math.random() * layer.colors.length) | 0];
-            const o = (Math.random() * 0.5 + 0.3).toFixed(2);
-            shadows.push(`${x}vw ${y}vh 1px ${s}px rgba(${c[0]},${c[1]},${c[2]},${o})`);
-        }
-        el.style.boxShadow = shadows.join(',');
-        el.style.opacity = layer.alpha;
-    }
-    function buildHud() {
-        const rail = document.getElementById('hudRail');
-        const projects = document.querySelectorAll('.project');
-        if (!rail || !projects.length) return null;
-        const progress = document.createElement('span');
-        progress.className = 'hud-progress';
-        const fill = document.createElement('span');
-        fill.className = 'hud-progress-fill';
-        progress.appendChild(fill);
-        rail.appendChild(progress);
-        projects.forEach((_, i) => {
-            const dot = document.createElement('span');
-            dot.className = 'hud-dot';
-            dot.textContent = String(i + 1).padStart(2, '0');
-            dot.title = `跳转到项目 ${i + 1}`;
-            rail.appendChild(dot);
-        });
-        return { dots: Array.from(rail.querySelectorAll('.hud-dot')), fill: fill };
-    }
-    function clampNum(v, min, max) { return Math.min(Math.max(v, min), max); }
-    function initFlightFx() {
-        starLayers.forEach(makeStars);
-        const projects = document.querySelectorAll('.project');
-        const hero = document.querySelector('.hero');
-        const warp = document.getElementById('warpLines');
-        const hud = buildHud();
-        const doc = document.documentElement;
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        // 平滑滚动（Lenis 提供惯性滑行；CDN 加载失败则回退原生滚动）
-        let lenis = null;
-        if (window.Lenis && !reduceMotion) {
-            lenis = new Lenis({ lerp: 0.08 });
-            const rafLenis = (t) => { lenis.raf(t); requestAnimationFrame(rafLenis); };
-            requestAnimationFrame(rafLenis);
-        }
-
-        // 站台序号点击 → 平滑跳转到对应项目
-        if (hud) {
-            hud.dots.forEach((dot, i) => {
-                dot.addEventListener('click', () => {
-                    const target = projects[i];
-                    if (!target) return;
-                    if (lenis) lenis.scrollTo(target, { offset: -24, duration: 1.4 });
-                    else target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
-            });
-        }
-
-        // 项目入场：加载时视口内的卡片带级联淡入，其余滚动进入时对焦淡入
-        function reveal(card, delay) {
-            card.style.setProperty('--delay', delay + 's');
-            card.classList.add('revealed');
-        }
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(en => {
-                if (en.isIntersecting) { reveal(en.target, 0); io.unobserve(en.target); }
-            });
-        }, { threshold: 0.06 });
-        projects.forEach((card, i) => {
-            if (card.getBoundingClientRect().top < window.innerHeight - 40) {
-                reveal(card, Math.min(i * 0.09, 0.55));
-            } else {
-                io.observe(card);
-            }
-            // 站点幽灵编号 + 光标聚光层
-            const ghost = document.createElement('span');
-            ghost.className = 'ghost-num';
-            ghost.textContent = String(i + 1).padStart(2, '0');
-            const spot = document.createElement('div');
-            spot.className = 'spotlight';
-            card.insertBefore(spot, card.firstChild);
-            card.insertBefore(ghost, card.firstChild);
-            if (!reduceMotion) {
-                card.addEventListener('mousemove', e => {
-                    const r = card.getBoundingClientRect();
-                    card.style.setProperty('--mx', (e.clientX - r.left).toFixed(1) + 'px');
-                    card.style.setProperty('--my', (e.clientY - r.top).toFixed(1) + 'px');
-                });
-            }
-        });
-
-        // 磁性按钮：鼠标悬停时按钮轻微追随光标
-        if (!reduceMotion) {
-            document.querySelectorAll('.download-btn').forEach(btn => {
-                btn.addEventListener('mousemove', e => {
-                    const r = btn.getBoundingClientRect();
-                    const dx = (e.clientX - r.left - r.width / 2) * 0.18;
-                    const dy = (e.clientY - r.top - r.height / 2) * 0.3;
-                    btn.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`;
-                });
-                btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-            });
-        }
-
-        // 高速滚动光纹：滚轮大力滚动或滚动速度陡增时亮起
-        let warpTimer = null;
-        function triggerWarp() {
-            if (!warp || reduceMotion) return;
-            warp.classList.add('active');
-            clearTimeout(warpTimer);
-            warpTimer = setTimeout(() => warp.classList.remove('active'), 260);
-        }
-        window.addEventListener('wheel', (e) => { if (Math.abs(e.deltaY) > 200) triggerWarp(); }, { passive: true });
-        let lastScrollY = window.scrollY, lastScrollT = performance.now();
-        window.addEventListener('scroll', () => {
-            const t = performance.now();
-            const v = Math.abs(window.scrollY - lastScrollY) / Math.max(t - lastScrollT, 1);
-            if (v > 1.2) triggerWarp();
-            lastScrollY = window.scrollY;
-            lastScrollT = t;
-            targetY = window.scrollY;
-        }, { passive: true });
-
-        // 视觉惯性循环：视差量由缓动后的 curY 驱动，滚动停止后仍有余韵
-        let targetY = window.scrollY;
-        let curY = targetY;
-        function loop() {
-            if (!reduceMotion) {
-                curY += (targetY - curY) * 0.12;
-                if (Math.abs(targetY - curY) < 0.05) curY = targetY;
-            } else {
-                curY = targetY;
-            }
-            const vh = window.innerHeight;
-            // 星空向后飞掠
-            starLayers.forEach(l => {
-                const el = document.getElementById(l.id);
-                if (el) el.style.transform = `translate3d(0, ${-curY * l.speed}px, 0)`;
-            });
-            // 英雄区像起飞后远去
-            if (hero) hero.style.setProperty('--hero-s', clampNum(curY / 700, 0, 1));
-            // 项目卡片零重力漂移
-            projects.forEach(card => {
-                const r = card.getBoundingClientRect();
-                const center = r.top + r.height / 2;
-                const fly = clampNum((vh / 2 - center) / (vh * 0.8), -1, 1);
-                card.style.setProperty('--fly', fly.toFixed(3));
-            });
-            // 站台指示 + 航线进度
-            if (hud) {
-                let best = -1, bestDist = Infinity;
-                projects.forEach((card, i) => {
-                    const r = card.getBoundingClientRect();
-                    const d = Math.abs(r.top + r.height / 2 - vh / 2);
-                    if (d < bestDist) { bestDist = d; best = i; }
-                });
-                hud.dots.forEach((dot, i) => dot.classList.toggle('active', i === best));
-                const max = doc.scrollHeight - vh;
-                if (max > 0) hud.fill.style.height = clampNum((curY / max) * 100, 0, 100).toFixed(1) + '%';
-            }
-            requestAnimationFrame(loop);
-        }
-        window.addEventListener('resize', () => { targetY = window.scrollY; });
-        requestAnimationFrame(loop);
-    }
-    window.addEventListener('DOMContentLoaded', initFlightFx);
-</script>
-
+    </script>
 </body>
 </html>
